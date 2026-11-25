@@ -231,6 +231,21 @@ footer::after{content:"— 祝大家天天上分 (๑•̀ㅂ•́)و✧ —";di
 .du-n span{font-size:10px;color:var(--pink2)}
 .du-r{text-align:right}.du-r b{display:block;font-size:18px;color:var(--mint)}.du-r span{font-size:11px;color:var(--tx3);font-weight:500}
 .elo-c{background:#fff;border:2px solid var(--line);border-radius:18px;padding:10px 6px 4px}
+.lede{max-width:680px;margin:18px auto 0;background:#fff;border:2px solid var(--line);border-radius:22px;padding:14px 20px;font-size:14px;font-weight:500;line-height:1.9;color:var(--tx2);box-shadow:0 5px 0 #f6dce9;text-align:left}
+.lede b{color:var(--pink);font-weight:900}
+#dist h2::before{content:"🫧"}#method h2::before{content:"🧮"}
+.dist{background:#fff;border:2px solid var(--line);border-radius:26px;padding:16px 16px 10px;box-shadow:0 8px 0 #f6dce9}
+.dist svg{display:block;width:100%;height:auto}
+.dist .cap{font-size:12px;color:var(--tx3);font-weight:500;margin:6px 6px 0}
+.method{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.method div{background:#fff;border:2px solid var(--line);border-radius:22px;padding:16px 18px;font-size:13px;font-weight:500;color:var(--tx2);line-height:1.8;box-shadow:0 5px 0 #f6dce9}
+.method b{display:block;font-size:15px;color:var(--tx);font-weight:900;margin-bottom:4px}
+.stags{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+.stag{font-size:10.5px;padding:0 7px;border-radius:10px;background:#fff0f7;color:var(--pink);border:1px solid #ffd6e7;line-height:17px;font-weight:700;white-space:nowrap}
+.tr{height:auto;min-height:66px;padding-top:8px;padding-bottom:8px}
+.spark{flex:1;height:30px;min-width:60px;max-width:110px}
+@media(max-width:980px){.method{grid-template-columns:1fr}}
+@media(max-width:640px){.pwr .spark{display:none}.stags .stag:nth-child(n+3){display:none}}
 @media(max-width:980px){.duos{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.duos{grid-template-columns:1fr}}
 </style>
@@ -247,10 +262,13 @@ footer::after{content:"— 祝大家天天上分 (๑•̀ㅂ•́)و✧ —";di
     <div class="eyebrow">内战小报 · 第 2 期</div>
     <h1>峡谷萌战力榜</h1>
     <p>按每场胜负和对手强弱计算等级分，再换成 S / A / B / C / D 评级，打什么位置都公平。点一点小伙伴的名字，就能看 TA 的专属小档案哦～</p>
+    <div class="lede" id="lede"></div>
     <div class="kpis" id="kpis"></div>
   </header>
 
   <section id="top"><div class="sh"><h2>今日最闪亮</h2><div class="d" id="topd"></div></div><div class="podium" id="podium"></div></section>
+  <section id="dist"><div class="sh"><h2>大家站在哪里</h2><div class="d">至少 3 场 · 越靠右等级分越高</div></div>
+    <div class="dist"><svg id="dots" viewBox="0 0 1000 250"></svg><div class="cap">每个圆点是一位召唤师，圆点越大场次越多；前五名带横线表示 ± 误差范围。虚线是起始分 1500，彩色背景是评级区间。</div></div></section>
   <section id="awards"><div class="sh"><h2>小红花墙</h2><div class="d">至少 5 场</div></div><div class="awards" id="aw"></div></section>
 
   <section id="duos"><div class="sh"><h2>最佳拍档</h2><div class="d">同队至少 4 场 · 按保守胜率排序</div></div><div class="duos" id="duo"></div></section>
@@ -266,6 +284,11 @@ footer::after{content:"— 祝大家天天上分 (๑•̀ㅂ•́)و✧ —";di
 
   <section id="games"><div class="sh"><h2>对局小日记</h2><div class="d">最新在前 · MVP 为全场最高评分，SVP 为败方最高评分</div></div><div class="ml" id="ml"></div><button class="more" id="more">加载更多</button></section>
 
+  <section id="method"><div class="sh"><h2>怎么算的</h2></div><div class="method">
+    <div><b>🎲 等级分</b>人人从 1500 起步。每场按两队平均分算赢面，K 值 40：爆冷赢强队加得多，赢弱队加得少。只看胜负，不看位置。</div>
+    <div><b>✨ 个人发挥修正</b>同队不再平分输赢：评分高于同场平均的人，赢了多加、输了少扣，最多 ±37%。输局里打得好也不会被埋没。</div>
+    <div><b>🏷️ 误差与标签</b>误差约为 200/√场次，场次少位置就不稳。风格标签按伤害占比、参团、死亡、助攻自动生成，只描述打法，不计分。</div>
+  </div></section>
   <footer>
     <b>等级分</b>：每人从 1500 分起步。每场根据两队平均分算出赢面，爆冷赢强队加分多、赢弱队加分少；个人评分高于同场平均的人，赢了多加、输了少扣（最多 ±37%）。只看胜负和发挥，不看伤害经济，辅助不吃亏。<br>
     <b>评级</b>：S ≥ 1620 · A ≥ 1560 · B ≥ 1500 · C ≥ 1440 · D &lt; 1440。“±”是误差范围，场次越少越不准。<br>
@@ -309,6 +332,9 @@ M.map((m,i)=>i).sort((a,b)=>M[a][0].localeCompare(M[b][0])).forEach(mi=>{
 const TIERS=[["S",1620],["A",1560],["B",1500],["C",1440],["D",-1e9]];
 P.forEach(p=>{p.elo=ELO[p.name]??1500;p.power=p.elo;p.err=200/Math.sqrt(p.n);p.exc=p.ex.reduce((a,b)=>a+b,0)/p.ex.length;
   p.tier=TIERS.find(([,v])=>p.elo>=v)[0];p.bar=Math.max(4,Math.min(100,(p.elo-1300)/420*100))});
+P.forEach(p=>{const t=[];
+  if(p.share>=25)t.push("输出核心");if(p.kp>=62)t.push("团战发动机");if(p.a>=12&&p.share<17)t.push("辅助型");
+  if(p.d<=4.6)t.push("稳健少死");if(p.k>=10)t.push("收割者");if(p.d>=8.5)t.push("激进");if(p.mvp>=3)t.push("MVP×"+p.mvp);p.tags=t.slice(0,3)});
 const ranked=[...P].sort((a,b)=>b.power-a.power);ranked.forEach((p,i)=>p.rank=i+1);
 const byName=Object.fromEntries(P.map(p=>[p.name,p]));
 // percentiles for radar (players with >=3 games)
@@ -322,6 +348,24 @@ $("#ft").textContent=`${META.region}，${META.range}，共 ${META.matches} 场`;
 $("#kpis").innerHTML=[["对局场次",M.length,"场"],["参战召唤师",P.length,"人"],["总击杀",Math.round(totalK),""],["平均时长",fmt(avgMin,1),"分钟"]]
   .map(([l,v,u])=>`<div class="kpi"><div class="l">${l}</div><div class="v num">${v}<small>${u}</small></div></div>`).join("");
 
+// headline
+(function(){const el=P.filter(p=>p.n>=5).sort((a,b)=>b.elo-a.elo),a=el[0],b=el[1],hot=[...el].sort((x,y)=>y.exc-x.exc)[0];
+  $("#lede").innerHTML=`🏆 <b>${esc(short(a.name))}</b> 以 ${a.w} 胜 ${a.l} 负、等级分 <b>${fmt(a.elo)}</b> 领跑，领先第二名 <b>${esc(short(b.name))}</b> ${fmt(a.elo-b.elo)} 分。<br>🌟 只看个人发挥，<b>${esc(short(hot.name))}</b> 的评分平均比同场其他人高 <b>${fmt(hot.exc,1)}</b> 分，是最会“带飞”的人。`})();
+// dot plot
+(function(){
+  const pts=P.filter(p=>p.n>=3).sort((a,b)=>a.elo-b.elo),top5=P.filter(p=>p.n>=5).sort((a,b)=>b.elo-a.elo).slice(0,5),T5=new Set(top5.map(p=>p.name));
+  const lo=Math.floor((Math.min(...pts.map(p=>p.elo-(T5.has(p.name)?p.err:0)))-10)/50)*50,hi=Math.ceil((Math.max(...pts.map(p=>p.elo+(T5.has(p.name)?p.err:0)))+10)/50)*50;
+  const X=v=>30+(v-lo)/(hi-lo)*940;let g="";
+  const bands=[["D",lo,1440],["C",1440,1500],["B",1500,1560],["A",1560,1620],["S",1620,hi]];
+  bands.forEach(([t,a,b])=>{a=Math.max(a,lo);b=Math.min(b,hi);if(b>a)g+=`<rect x="${X(a)}" y="105" width="${X(b)-X(a)}" height="112" fill="var(--${t})" fill-opacity=".09"/><text x="${(X(a)+X(b))/2}" y="122" font-size="13" font-weight="900" fill="var(--${t})" text-anchor="middle" opacity=".8">${t}</text>`});
+  for(let v=lo;v<=hi;v+=50)g+=`<text x="${X(v)}" y="238" font-size="12" fill="#9a86a6" text-anchor="middle">${v}</text>`;
+  g+=`<line x1="${X(1500)}" x2="${X(1500)}" y1="105" y2="217" stroke="#c1b1cb" stroke-dasharray="4 4"/>`;
+  const lanes=[];pts.forEach(p=>{const x=X(p.elo);let ln=0;while(lanes[ln]!==undefined&&x-lanes[ln]<15)ln++;lanes[ln]=x;p._y=168+(ln%2?1:-1)*Math.ceil(ln/2)*12});
+  pts.forEach(p=>{const x=X(p.elo),y=p._y;if(T5.has(p.name))g+=`<line x1="${X(p.elo-p.err)}" x2="${X(p.elo+p.err)}" y1="${y}" y2="${y}" stroke="#ff7eb6" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/>`;
+    g+=`<circle cx="${x}" cy="${y}" r="${4+Math.min(p.n,22)/4.5}" fill="var(--${p.tier})" fill-opacity="${T5.has(p.name)?1:.7}" stroke="#fff" stroke-width="2" data-n="${esc(p.name)}" style="cursor:pointer"><title>${esc(short(p.name))} ${fmt(p.elo)} · ${p.tier} · ${p.n}场</title></circle>`});
+  [...top5].sort((a,b)=>a.elo-b.elo).forEach((p,i)=>{const x=X(p.elo),ty=18+i*18,right=x>760;
+    g+=`<line x1="${x}" x2="${x}" y1="${p._y-8}" y2="${ty+4}" stroke="#ff7eb6" stroke-width="1.2"/><text x="${right?x-5:x+5}" y="${ty}" font-size="13" font-weight="900" fill="#5b4566" text-anchor="${right?"end":"start"}" data-n="${esc(p.name)}" style="cursor:pointer">${esc(short(p.name))} <tspan fill="#ff7eb6">${fmt(p.elo)}</tspan></text>`});
+  $("#dots").innerHTML=g})();
 // podium
 const top3=ranked.filter(p=>p.n>=5).slice(0,3);
 $("#topd").textContent="至少 5 场 · 按等级分";
@@ -347,6 +391,10 @@ const COLS=[["rank","#"],["name","召唤师"],["tier","评级"],["power","等级
 let sk="power",desc=true,minN=5;
 const maxDpm=Math.max(...P.map(p=>p.dpm));
 function ring(v){const r=14,c=2*Math.PI*r,o=c*(1-v/100);return `<svg class="ring" viewBox="0 0 34 34"><circle cx="17" cy="17" r="${r}" fill="none" stroke="#ffd0dd" stroke-width="5"/><circle cx="17" cy="17" r="${r}" fill="none" stroke="#4fd1b0" stroke-width="5" stroke-dasharray="${c}" stroke-dashoffset="${o}" transform="rotate(-90 17 17)" stroke-linecap="round"/></svg>`}
+function spark(p){const h=p.hist;if(h.length<2)return `<div class="bar"><i style="width:${p.bar}%"></i></div>`;
+  const vs=[1500,...h.map(x=>x.r)],lo=Math.min(...vs),hi=Math.max(...vs),sp=hi-lo||1,y=v=>(26-(v-lo)/sp*22).toFixed(1);
+  const pts=vs.map((v,i)=>`${(i/(vs.length-1)*96+2).toFixed(1)},${y(v)}`).join(" "),up=vs.at(-1)>=1500;
+  return `<svg class="spark" viewBox="0 0 100 30"><line x1="0" x2="100" y1="${y(1500)}" y2="${y(1500)}" stroke="#f6dce9" stroke-dasharray="3 3"/><polyline points="${pts}" fill="none" stroke="${up?"#4fd1b0":"#ff8fab"}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="98" cy="${y(vs.at(-1))}" r="2.6" fill="${up?"#4fd1b0":"#ff8fab"}"/></svg>`}
 function renderTable(){
   const q=$("#q").value.trim().toLowerCase();
   $("#th").innerHTML=COLS.map(([k,l])=>`<div data-k="${k}" class="${k===sk?"on":""}">${l}${k===sk?(desc?" ↓":" ↑"):""}</div>`).join("");
@@ -361,9 +409,9 @@ function renderTable(){
     const kc=p.kda>=3.5?"k-hi":p.kda>=2.5?"k-md":"k-lo";
     return `<div class="tr ${p.rank<=3?"top"+p.rank:""}" data-n="${esc(p.name)}">
       <div class="rk num">${p.rank}</div>
-      <div class="pl"><div class="mini" style="${avStyle(p)}">${esc([...short(p.name)][0])}</div><div style="min-width:0"><div class="nm">${esc(short(p.name))}</div><div class="tg">${esc(tagOf(p.name))}</div></div></div>
+      <div class="pl"><div class="mini" style="${avStyle(p)}">${esc([...short(p.name)][0])}</div><div style="min-width:0"><div class="nm">${esc(short(p.name))}</div><div class="stags">${p.tags.length?p.tags.map(x=>`<span class="stag">${x}</span>`).join(""):`<span class="tg">${esc(tagOf(p.name))}</span>`}</div></div></div>
       <div><div class="tier" style="--c:var(--${p.tier})">${p.tier}</div></div>
-      <div class="pwr"><b class="num">${fmt(p.elo)}<small>±${fmt(p.err)}</small></b><div class="bar"><i style="width:${p.bar}%"></i></div></div>
+      <div class="pwr"><b class="num">${fmt(p.elo)}<small>±${fmt(p.err)}</small></b>${spark(p)}</div>
       <div class="wr">${ring(p.wr)}<div><b class="num">${fmt(p.wr)}%</b><span>${p.w}胜 ${p.l}负</span></div></div>
       <div class="kda"><b class="num ${kc}">${fmt(p.kda,2)}</b><span class="num">${fmt(p.k,1)} / ${fmt(p.d,1)} / ${fmt(p.a,1)}</span></div>
       <div class="sc num ${p.exc>=0?"pos":"neg"}">${p.exc>=0?"+":""}${fmt(p.exc,1)}</div>
@@ -457,3 +505,4 @@ renderTable();renderMatches();
 </script>
 </body>
 </html>
+
