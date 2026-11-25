@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>峡谷内战手账 · 战力榜</title>
+<style>
+:root{
+  --cream:#FDF8F0;--paper:#FFFBF2;--cocoa:#5C4033;--cocoa2:#8a6b5a;--cocoa3:#b9a493;--line:#e8d5c4;
+  --pink:#F4C2C2;--pink2:#e88f9c;--matcha:#b9d8a8;--matcha2:#6f9e5c;--butter:#fbe3a1;--butter2:#d9a520;--tea:#e8d5c4;--sky:#c6dcef;--sky2:#5f8fb8;--lav:#d9cdee;
+  --S:#e8707f;--A:#e5a33a;--B:#6f9e5c;--C:#5f8fb8;--Q:#a99a8e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--cocoa);font:14px/1.6 "Yuanti SC","YouYuan","幼圆","PingFang SC","Hiragino Maru Gothic ProN","Microsoft YaHei",system-ui,sans-serif;
+  background-image:radial-gradient(#e3cdb8 1px,transparent 1.2px);background-size:18px 18px;padding-bottom:env(safe-area-inset-bottom)}
+.n{font-family:"Arial Rounded MT Bold","Varela Round","Segoe UI",system-ui,sans-serif;font-variant-numeric:tabular-nums;font-weight:700}
+button,select,input{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.tape{position:absolute;height:22px;width:110px;background:repeating-linear-gradient(45deg,#f6cfd3 0 8px,#fbe3e5 8px 16px);opacity:.92;box-shadow:0 1px 0 #0000000d;z-index:2}
+.tape.g{background:repeating-linear-gradient(90deg,#cfe3c2 0 10px,#e3efda 10px 20px)}
+.tape.y{background:repeating-linear-gradient(-45deg,#fbe3a1 0 7px,#fdf0c9 7px 14px)}
+.tape.b{background:radial-gradient(#fff 2px,transparent 2.5px) 0 0/10px 10px,#cfe0f0}
+.card{position:relative;background:var(--paper);border:2px solid var(--cocoa);border-radius:14px;box-shadow:4px 4px 0 var(--pink)}
+.stamp{display:inline-block;border:1.8px solid currentColor;border-radius:6px;padding:0 6px;font-size:11px;line-height:18px;font-weight:800;letter-spacing:1px;transform:rotate(-3deg);opacity:.9;white-space:nowrap;
+  box-shadow:inset 0 0 0 1px #ffffff80}
+.stamp:nth-child(2n){transform:rotate(2deg)}
+.s-pink{color:#d4626f}.s-green{color:#5e8c4c}.s-yel{color:#c48a12}.s-blue{color:#4f7ea6}.s-lav{color:#8467b4}.s-cocoa{color:var(--cocoa2)}
+
+/* header */
+header{padding:26px 0 8px;text-align:center;position:relative}
+.kick{display:inline-block;font-size:12px;letter-spacing:4px;color:var(--cocoa2);border-bottom:1.5px dashed var(--cocoa3);padding:0 8px 2px}
+h1{font-size:clamp(28px,6vw,44px);font-weight:900;letter-spacing:3px;margin:8px 0 4px;color:var(--cocoa);text-shadow:3px 3px 0 var(--pink)}
+h1 small{font-size:.45em;letter-spacing:1px;color:var(--cocoa2);text-shadow:none;margin-left:6px;vertical-align:middle}
+.sub{color:var(--cocoa2);font-size:13px}
+.meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.chip{background:var(--paper);border:1.5px solid var(--cocoa);border-radius:20px;padding:3px 12px;font-size:12px;box-shadow:2px 2px 0 var(--tea)}
+.sel{appearance:none;-webkit-appearance:none;background:var(--butter) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235C4033'/%3E%3C/svg%3E") no-repeat right 10px center;
+  border:1.5px solid var(--cocoa);border-radius:20px;padding:3px 26px 3px 12px;font-size:12px;font-weight:800;box-shadow:2px 2px 0 var(--tea);cursor:pointer}
+
+/* rules */
+.rules{margin:22px auto 0;padding:18px 16px 14px;box-shadow:4px 4px 0 var(--matcha)}
+.rules .tape{top:-11px;left:24px;width:96px;transform:rotate(-3deg)}
+.rules h2{font-size:17px;font-weight:900;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rules h2 small{font-size:12px;font-weight:600;color:var(--cocoa2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.step{background:#fff;border:1.5px solid var(--cocoa);border-radius:12px;padding:12px 10px 8px;position:relative}
+.step .no{position:absolute;top:-10px;left:10px;background:var(--butter);border:1.5px solid var(--cocoa);border-radius:10px;font-size:11px;font-weight:900;padding:0 7px}
+.step b{display:block;font-size:14px}
+.step p{font-size:12px;color:var(--cocoa2);line-height:1.65;margin-top:2px}
+.step p em{font-style:normal;color:var(--cocoa);font-weight:800}
+.legend{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;font-size:12px}
+.legend .lg{display:flex;align-items:center;gap:5px;background:#fff;border:1.5px dashed var(--cocoa3);border-radius:20px;padding:2px 10px 2px 3px}
+.legend .tier{width:24px;height:24px;font-size:11px;transform:none;box-shadow:none}
+.legend .tier.q{font-size:8px}
+.eg{margin-top:10px;font-size:12.5px;background:#fff8e1;border:1.5px dashed #e3c26a;border-radius:10px;padding:8px 10px;line-height:1.85}
+.eg b{color:#c0505f}.eg .pos{color:var(--matcha2);font-weight:900}.eg .neg{color:#c0505f;font-weight:900}
+.qm{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;font-size:10px;margin-left:3px;cursor:pointer;vertical-align:1px;line-height:1}
+/* role / champ */
+.rolegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.rc{border:2px solid var(--cocoa);border-radius:12px;background:#fff;padding:10px 10px 6px;box-shadow:3px 3px 0 var(--c)}
+.rc h3{font-size:15px;font-weight:900;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.rc h3 small{font-size:11px;color:var(--cocoa2);font-weight:600}
+.rc ol{list-style:none;margin-top:6px}
+.rc li{display:grid;grid-template-columns:16px 1fr auto;gap:6px;font-size:12.5px;padding:4px 0;border-bottom:1px dashed var(--line);cursor:pointer;align-items:center}
+.rc li:last-child{border-bottom:0}.rc li i{font-style:normal;font-weight:900;color:var(--cocoa3)}
+.rc li span{min-width:0}.rc li span b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:800}.rc li small{display:block;font-size:10.5px;color:var(--cocoa2)}
+.subh{font-size:15px;font-weight:900;margin:6px 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.subh+.subh,.rolegrid+.subh{margin-top:24px}
+.ctbl{border:2px solid var(--cocoa);border-radius:12px;overflow:hidden;background:#fff}
+.crow{display:grid;grid-template-columns:minmax(120px,1.3fr) 54px 64px 1fr 64px minmax(120px,1.4fr);gap:8px;align-items:center;padding:7px 12px;border-bottom:1.5px dashed var(--line);font-size:13px}
+.crow:last-child{border-bottom:0}
+.crow.hd{background:#f7ecdf;font-size:12px;font-weight:900;color:var(--cocoa2);border-bottom:2px solid var(--cocoa)}
+.crow.hd div{cursor:pointer;white-space:nowrap}.crow.hd div.on{color:var(--cocoa)}
+.cn{display:flex;align-items:center;gap:8px;min-width:0}.cn b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cicon{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--cocoa);flex:none;display:grid;place-items:center;font-size:12px;font-weight:900;background:var(--h)}
+.rtag{font-size:10.5px;border:1px solid var(--cocoa3);border-radius:8px;padding:0 5px;color:var(--cocoa2);white-space:nowrap}
+.best{font-size:12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dtbl{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border:1.5px solid var(--cocoa);border-radius:10px;overflow:hidden}
+.dtbl th{background:#f7ecdf;font-weight:900;color:var(--cocoa2);padding:5px 6px;text-align:right;white-space:nowrap}.dtbl th:first-child,.dtbl td:first-child{text-align:left}
+.dtbl td{padding:5px 6px;border-top:1px dashed var(--line);text-align:right;white-space:nowrap}
+.dtbl .pos{color:var(--matcha2);font-weight:900}.dtbl .neg{color:#c0505f;font-weight:900}
+.chips2{display:flex;gap:6px;flex-wrap:wrap}
+.chips2 span{font-size:12px;background:#fff;border:1.5px solid var(--line);border-radius:8px;padding:2px 8px;cursor:default}
+.chips2 span b{margin-left:4px}
+.guess{font-size:11px;color:var(--cocoa3);font-weight:600}
+/* my card */
+.me{margin:18px auto 0;max-width:640px;position:relative;background:var(--butter);border:2px solid var(--cocoa);border-radius:4px 14px 14px 14px;padding:12px 14px 12px 16px;box-shadow:3px 3px 0 #e8c97a;transform:rotate(-.6deg);display:flex;gap:12px;align-items:center}
+.me .tape{top:-11px;left:18px;width:70px;transform:rotate(-4deg)}
+.me .who{flex:1;min-width:0}
+.me .who b{font-size:16px}.me .who .l2{font-size:12px;color:var(--cocoa2)}
+.me .who .l3{font-size:12px;margin-top:2px}
+.me .who .l3 em{font-style:normal;color:#c0505f;font-weight:900}
+.me .x{background:none;border:1.5px solid var(--cocoa);border-radius:8px;padding:2px 8px;font-size:12px;cursor:pointer}
+.me.hint{background:var(--paper);box-shadow:3px 3px 0 var(--tea);transform:rotate(.4deg);font-size:13px;color:var(--cocoa2)}
+
+/* tabs */
+.tabs{display:flex;gap:6px;padding:0 18px;margin-top:26px;position:relative;z-index:1}
+.tab{border:2px solid var(--cocoa);border-bottom:0;border-radius:10px 10px 0 0;padding:8px 14px 10px;font-weight:900;font-size:14px;cursor:pointer;transform:translateY(6px) rotate(-1deg);transition:transform .15s;background:var(--c)}
+.tab:nth-child(1){--c:#f9d9d9}.tab:nth-child(2){--c:#d6e6f3}.tab:nth-child(3){--c:#dcebd2}.tab:nth-child(4){--c:#fbe9b7}
+.tab:nth-child(2n){transform:translateY(6px) rotate(1deg)}
+.tab.on{transform:translateY(2px);padding-bottom:12px}
+.tab:hover{transform:translateY(0)}
+.main{padding:18px 16px 22px;margin-top:-2px}
+.panel{display:none}.panel.on{display:block}
+
+/* podium */
+details.pod{margin-bottom:16px}
+details.pod summary{list-style:none;cursor:pointer;font-weight:900;font-size:15px;display:flex;align-items:center;gap:8px;user-select:none}
+details.pod summary::-webkit-details-marker{display:none}
+details.pod summary::after{content:"收起";font-size:11px;color:var(--cocoa2);border:1.5px solid var(--cocoa3);border-radius:10px;padding:0 8px;margin-left:auto}
+details.pod:not([open]) summary::after{content:"展开"}
+.podium{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:14px;align-items:end;margin-top:14px}
+.pc{position:relative;text-align:center;padding:24px 10px 14px;border:2px solid var(--cocoa);border-radius:14px;background:var(--paper);cursor:pointer;transition:transform .15s}
+.pc:hover{transform:translateY(-3px)}
+.pc .tape{top:-11px;left:50%;margin-left:-45px;width:90px;transform:rotate(-3deg)}
+.pc.p1{box-shadow:4px 4px 0 var(--pink);padding-top:30px;background:#fff6f4}.pc.p2{box-shadow:4px 4px 0 var(--sky)}.pc.p3{box-shadow:4px 4px 0 var(--butter)}
+.pc .medal{font-size:26px;line-height:1}
+.av{width:56px;height:56px;border-radius:50%;border:2px solid var(--cocoa);display:grid;place-items:center;font-weight:900;font-size:22px;margin:6px auto;background:var(--h)}
+.p1 .av{width:68px;height:68px;font-size:26px}
+.pc .nm{font-weight:900;font-size:15px;word-break:break-all;line-height:1.3}
+.pc .r{font-size:24px;margin-top:4px}.pc .r small{font-size:12px;color:var(--cocoa2);font-weight:600}
+.pc .st{margin-top:6px;font-size:12px;color:var(--cocoa2)}
+
+/* toolbar */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.search{flex:1;min-width:180px;border:2px solid var(--cocoa);border-radius:12px;padding:8px 12px;background:#fff;outline:none;box-shadow:2px 2px 0 var(--tea)}
+.search:focus{box-shadow:2px 2px 0 var(--pink)}
+.pills{display:flex;gap:4px;flex-wrap:wrap}
+.pill{border:1.5px solid var(--cocoa);background:#fff;border-radius:20px;padding:4px 11px;font-size:12px;font-weight:800;cursor:pointer}
+.pill.on{background:var(--cocoa);color:var(--paper)}
+
+/* table */
+.tbl{border:2px solid var(--cocoa);border-radius:12px;overflow:hidden;background:#fff}
+.row{display:grid;grid-template-columns:62px minmax(150px,1.7fr) 48px 1.15fr 52px .9fr .9fr 62px 72px 48px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1.5px dashed var(--line)}
+.row:last-child{border-bottom:0}
+.row.hd{background:#f7ecdf;font-size:12px;font-weight:900;color:var(--cocoa2);border-bottom:2px solid var(--cocoa);padding-top:7px;padding-bottom:7px}
+.row.hd div{cursor:pointer;white-space:nowrap}.row.hd div.on{color:var(--cocoa)}
+.row.pl{cursor:pointer;min-height:56px}.row.pl:hover{background:#fff7ee}
+.row.mine{background:#fff3c8}
+.rk{display:flex;align-items:baseline;gap:4px}.rk b{font-size:16px}
+.dl{font-size:10.5px;font-weight:900}.up{color:var(--matcha2)}.dn{color:#c0505f}.nw{color:#c48a12}.eq{color:var(--cocoa3)}
+.nmc{display:flex;gap:10px;align-items:center;min-width:0}
+.nmc .av{width:34px;height:34px;font-size:14px;margin:0;flex:none;border-width:1.5px}
+.nmc .t{min-width:0}.nmc .t b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:900}
+.nmc .t .tg{font-size:11px;color:var(--cocoa3)}
+.nmc .sts{display:flex;gap:4px;margin-top:2px;flex-wrap:wrap}
+.nmc .sts .stamp{font-size:10px;line-height:15px;padding:0 4px}
+.tier{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:15px;color:var(--c);border:2px solid var(--c);background:#fff;transform:rotate(-8deg);box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 3px color-mix(in srgb,var(--c) 40%,transparent)}
+.tier.q{font-size:10px;line-height:1.1;text-align:center}
+.rt b{font-size:17px}.rt small{color:var(--cocoa3);font-size:11px;margin-left:2px}
+.wr{display:flex;flex-direction:column;gap:3px;font-size:12px}
+.wbar{height:6px;border-radius:3px;background:#f7d4d4;overflow:hidden}.wbar i{display:block;height:100%;background:var(--matcha2)}
+.muted{color:var(--cocoa2);font-size:12px}
+.empty{padding:30px;text-align:center;color:var(--cocoa2)}
+.more{display:block;margin:14px auto 0;border:2px solid var(--cocoa);background:var(--butter);border-radius:20px;padding:6px 22px;font-weight:900;cursor:pointer;box-shadow:2px 2px 0 #e8c97a}
+
+/* fun boards */
+.fun{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 16px;padding-top:8px}
+.fb{position:relative;padding:20px 14px 12px;border:2px solid var(--cocoa);border-radius:12px;background:#fff;box-shadow:3px 3px 0 var(--c,var(--tea))}
+.fb:nth-child(3n+1){--c:var(--pink);transform:rotate(-.5deg)}.fb:nth-child(3n+2){--c:var(--matcha);transform:rotate(.4deg)}.fb:nth-child(3n){--c:var(--butter);transform:rotate(-.2deg)}
+.fb .tape{top:-11px;left:14px;width:80px;transform:rotate(-4deg)}
+.fb h3{font-size:15px;font-weight:900;display:flex;align-items:center;gap:6px}
+.fb .ds{font-size:11px;color:var(--cocoa2);margin-bottom:6px}
+.fb ol{list-style:none}
+.fb li{display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13px;cursor:pointer}
+.fb li:last-child{border-bottom:0}
+.fb li i{font-style:normal;width:18px;font-weight:900;color:var(--cocoa3)}
+.fb li:nth-child(1) i{color:var(--S)}
+.fb li span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fb li b{white-space:nowrap}
+
+/* matches */
+.mt{border:2px solid var(--cocoa);border-radius:12px;background:#fff;padding:12px;margin-bottom:12px;box-shadow:3px 3px 0 var(--tea)}
+.mt .hd{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--cocoa2);margin-bottom:8px;flex-wrap:wrap}
+.mt .hd b{color:var(--cocoa);font-size:14px}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.team{border-radius:10px;padding:6px 8px;border:1.5px dashed var(--c);background:color-mix(in srgb,var(--c) 18%,#fff)}
+.team.w{--c:var(--matcha2)}.team.l{--c:var(--pink2)}
+.team .th{font-size:12px;font-weight:900;color:var(--c);margin-bottom:2px}
+.team .p{display:grid;grid-template-columns:1fr auto 34px;gap:6px;font-size:12px;padding:2px 0;cursor:pointer}
+.team .p span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team .p .stamp{font-size:9px;line-height:13px;padding:0 3px;margin-left:3px}
+
+/* modal */
+.ov{position:fixed;inset:0;background:#5c403366;z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+@media(min-width:641px){.ov{align-items:center}}
+.md{position:relative;width:min(560px,100%);max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--paper);border:2px solid var(--cocoa);border-radius:18px 18px 0 0;padding:26px 18px 22px;box-shadow:4px 4px 0 var(--pink)}
+@media(min-width:641px){.md{border-radius:18px}}
+.md .tape{top:10px;left:50%;margin-left:-60px;width:120px;transform:rotate(-2deg)}
+.md .cl{position:absolute;top:10px;right:12px;width:32px;height:32px;border:2px solid var(--cocoa);border-radius:50%;background:#fff;font-size:16px;cursor:pointer;z-index:3}
+.mh{display:flex;gap:14px;align-items:center;margin-top:12px}
+.mh .av{width:66px;height:66px;font-size:26px;margin:0;flex:none}
+.mh .t{flex:1;min-width:0}.mh h2{font-size:20px;font-weight:900;word-break:break-all;line-height:1.3}
+.mh .tg{font-size:12px;color:var(--cocoa3)}
+.mh .tier{width:52px;height:52px;font-size:22px}
+.big{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;margin:14px 0 6px;padding:10px 12px;border:1.5px dashed var(--cocoa3);border-radius:12px;background:#fff}
+.big .r{font-size:30px}.big .r small{font-size:13px;color:var(--cocoa2)}
+.big .k{font-size:13px;color:var(--cocoa2)}.big .k b{color:var(--cocoa);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.grid div{background:#fff;border:1.5px solid var(--cocoa);border-radius:10px;padding:6px 8px}
+.grid span{display:block;font-size:11px;color:var(--cocoa2)}.grid b{font-size:16px}
+.sec{font-size:13px;font-weight:900;margin:16px 0 6px;display:flex;align-items:center;gap:6px}
+.sec::after{content:"";flex:1;border-bottom:1.5px dashed var(--cocoa3)}
+.stamps{display:flex;gap:6px;flex-wrap:wrap}
+.stamps .stamp{font-size:12px;line-height:22px;padding:0 8px}
+.spark{width:100%;height:auto;display:block;background:#fff;border:1.5px solid var(--cocoa);border-radius:10px}
+.gl{display:grid;grid-template-columns:8px 1fr auto 40px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px dashed var(--line);font-size:12px}
+.gl .s{width:8px;height:8px;border-radius:50%;background:var(--pink2)}.gl.w .s{background:var(--matcha2)}
+.mates{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mates div{font-size:12px;background:#fff;border:1.5px solid var(--line);border-radius:8px;padding:4px 8px;display:flex;justify-content:space-between;cursor:pointer}
+.acts{display:flex;gap:8px;margin-top:16px}
+.btn{flex:1;border:2px solid var(--cocoa);border-radius:12px;padding:9px;font-weight:900;cursor:pointer;background:#fff;box-shadow:2px 2px 0 var(--tea)}
+.btn.p{background:var(--pink)}.btn.y{background:var(--butter)}
+.shot{text-align:center}
+.shot img{width:100%;border:2px solid var(--cocoa);border-radius:12px;margin-top:8px}
+.shot p{font-size:12px;color:var(--cocoa2);margin-top:6px}
+
+footer{margin:26px 0 30px;font-size:12px;color:var(--cocoa2);line-height:1.9}
+footer .card{padding:16px 16px 12px;box-shadow:3px 3px 0 var(--tea)}
+footer .tape{top:-11px;right:20px;width:80px;transform:rotate(3deg)}
+footer b{color:var(--cocoa)}
+
+@media(max-width:900px){.fun{grid-template-columns:1fr 1fr}.rolegrid{grid-template-columns:repeat(3,1fr)}.steps{grid-template-columns:1fr 1fr;gap:14px 10px}}
+@media(max-width:640px){
+  .wrap{padding:0 10px}
+  .tabs{padding:0 6px;gap:4px}.tab{padding:7px 10px 9px;font-size:13px}
+  .main{padding:14px 10px 18px}
+  .row{grid-template-columns:54px 1fr 40px 92px;gap:6px;padding:8px 8px}
+  .row>div:nth-child(n+5){display:none}
+  .nmc .sts{display:none}.nmc .av{width:30px;height:30px}
+  .tier{width:30px;height:30px;font-size:13px}
+  .rt{text-align:right}.rt small{display:block;margin:0}
+  .podium{gap:8px}.pc{padding:20px 4px 10px}.pc .nm{font-size:12px}.pc .r{font-size:18px}.av{width:44px;height:44px;font-size:17px}.p1 .av{width:52px;height:52px}.pc .st{display:none}
+  .fun{grid-template-columns:1fr}
+  .teams{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .rolegrid{grid-template-columns:1fr 1fr;gap:10px}.steps{grid-template-columns:1fr 1fr;gap:14px 8px}.step{padding:12px 8px 6px}.step p{font-size:11.5px}
+  .crow{grid-template-columns:1fr 40px 50px 56px;padding:7px 8px;gap:6px}.crow>div:nth-child(4),.crow>div:nth-child(6){display:none}
+  .rules{padding:16px 10px 12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kick">LEAGUE OF LEGENDS · 国服内战</div>
+    <h1>峡谷内战手账<small>战力榜</small></h1>
+    <div class="sub" id="sub">正在翻开手账…</div>
+    <div class="meta"><select class="sel" id="period" aria-label="选择赛季"></select><span class="chip" id="mc"></span><span class="chip" id="pc"></span></div>
+  </header>
+
+  <section class="card rules" id="rules"><span class="tape g"></span>
+    <h2>📏 战力分怎么算？<small>Glicko-2 · 和排位分同一类算法，只看输赢和对手强弱</small></h2>
+    <div class="steps">
+      <div class="step"><span class="no">1</span><b>🌱 人人 1500 起步</b><p>新人都是 <em>1500 ±350</em>。± 越大代表“还看不准”，所以前几场涨跌会很猛。</p></div>
+      <div class="step"><span class="no">2</span><b>⚔️ 赢强队加得多</b><p>每场把<em>对面五人的平均分</em>当对手：赢比自己强的队大涨、赢弱队小涨；输给弱队扣得多。</p></div>
+      <div class="step"><span class="no">3</span><b>📅 按内战日结算</b><p>每个内战日结束后统一结算。<em>KDA、伤害、评分都不影响分数</em>，打什么位置都公平。</p></div>
+      <div class="step"><span class="no">4</span><b>🎯 打得越多越准</b><p>± 随场次变小，很久不来会慢慢变大。<em>± 超过 150</em> 显示“定级中”，不参与评级。</p></div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="eg" id="eg"></div>
+  </section>
+
+  <div id="me"></div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-t="board" role="tab">📒 总战力榜</button>
+    <button class="tab" data-t="pos" role="tab">🧭 位置英雄</button>
+    <button class="tab" data-t="fun" role="tab">🌸 趣味副榜</button>
+    <button class="tab" data-t="games" role="tab">📰 近期战报</button>
+  </nav>
+  <main class="card main">
+    <section class="panel on" id="p-board">
+      <details class="pod" open><summary>🏆 本期前三</summary><div class="podium" id="podium"></div></details>
+      <div class="tools">
+        <input class="search" id="q" placeholder="🔍 搜索召唤师名字或 #编号" autocomplete="off">
+        <div class="pills" id="minN"><button class="pill" data-v="1">全部</button><button class="pill" data-v="3">3场+</button><button class="pill on" data-v="5">5场+</button><button class="pill" data-v="10">10场+</button></div>
+        <div class="pills" id="roles"></div>
+      </div>
+      <div class="tbl" id="tbl"></div>
+    </section>
+    <section class="panel" id="p-pos">
+      <div class="subh">🧭 分位置战力榜 <span class="guess">按每人最常打的位置归类 · 至少 3 场</span></div>
+      <div class="rolegrid" id="rolegrid"></div>
+      <div class="subh">🎯 英雄数据 <span class="guess" id="chint"></span></div>
+      <div class="tools"><input class="search" id="cq" placeholder="🔍 搜索英雄" autocomplete="off"><div class="pills" id="croles"></div></div>
+      <div class="ctbl" id="ctbl"></div>
+    </section>
+    <section class="panel" id="p-fun"><div class="fun" id="fun"></div></section>
+    <section class="panel" id="p-games"><div id="games"></div><button class="more" id="more">再翻一页</button></section>
+  </main>
+
+  <footer><div class="card"><span class="tape g"></span>
+    <b>位置</b>由召唤师技能、装备和英雄推断（惩戒→打野，辅助装→辅助，射手→下路），可能有少量误差。<br>
+    <span id="src"></span>
+  </div></footer>
+</div>
+
+<div class="ov" id="ov"><div class="md" id="md"></div></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function f(v,d){return Number(v).toFixed(d||0)}
+function short(n){return n.split("#")[0]}
+function tagOf(n){var i=n.indexOf("#");return i<0?"":n.slice(i)}
+function hue(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h}
+function avBg(n){var h=hue(n);return "hsl("+h+" 70% 86%)"}
+function first(n){return Array.from(short(n))[0]||"?"}
+var ME_KEY="lol_scrapbook_me";
+var ST={raw:null,period:"all",minN:5,q:"",role:"",sort:"rating",desc:true,tab:"board",shown:8,me:""};
+try{ST.me=localStorage.getItem(ME_KEY)||""}catch(e){}
+var V=null; // computed view
+
+/* ---------- Glicko-2 ---------- */
+var SC=173.7178,TAU=0.5,R0=1500,RD0=350,VOL0=0.06,EPS=1e-6;
+function g(phi){return 1/Math.sqrt(1+3*phi*phi/(Math.PI*Math.PI))}
+function E(mu,muj,phij){return 1/(1+Math.exp(-g(phij)*(mu-muj)))}
+function newVol(phi,sig,v,delta){
+  var a=Math.log(sig*sig),A=a,B,fx=function(x){var ex=Math.exp(x);return ex*(delta*delta-phi*phi-v-ex)/(2*Math.pow(phi*phi+v+ex,2))-(x-a)/(TAU*TAU)};
+  if(delta*delta>phi*phi+v)B=Math.log(delta*delta-phi*phi-v);else{var k=1;while(fx(a-k*TAU)<0)k++;B=a-k*TAU}
+  var fA=fx(A),fB=fx(B),it=0;
+  while(Math.abs(B-A)>EPS&&it++<100){var C=A+(A-B)*fA/(fB-fA),fC=fx(C);if(fC*fB<=0){A=B;fA=fB}else fA=fA/2;B=C;fB=fC}
+  return Math.exp(A/2);
+}
+function runGlicko(matches){
+  var days=[],byDay={};matches.forEach(function(m){if(!byDay[m.day]){byDay[m.day]=[];days.push(m.day)}byDay[m.day].push(m)});
+  days.sort();
+  var st={},snaps=[];
+  days.forEach(function(day){
+    var res={};
+    byDay[day].forEach(function(m){
+      m.players.forEach(function(p){if(!st[p.name])st[p.name]={mu:0,phi:RD0/SC,sig:VOL0}});
+      [1,2].forEach(function(t){
+        var mine=m.players.filter(function(p){return p.team===t}),opp=m.players.filter(function(p){return p.team!==t});
+        if(!mine.length||!opp.length)return;
+        var muj=opp.reduce(function(s,p){return s+st[p.name].mu},0)/opp.length;
+        var phij=Math.sqrt(opp.reduce(function(s,p){return s+Math.pow(st[p.name].phi,2)},0))/opp.length;
+        mine.forEach(function(p){(res[p.name]=res[p.name]||[]).push({muj:muj,phij:phij,s:p.win?1:0})});
+      });
+    });
+    var nxt={};
+    Object.keys(st).forEach(function(n){
+      var o=st[n],r=res[n];
+      if(!r){nxt[n]={mu:o.mu,phi:Math.min(Math.sqrt(o.phi*o.phi+o.sig*o.sig),RD0/SC),sig:o.sig};return}
+      var vi=0,dsum=0;
+      r.forEach(function(x){var gg=g(x.phij),e=E(o.mu,x.muj,x.phij);vi+=gg*gg*e*(1-e);dsum+=gg*(x.s-e)});
+      var v=1/vi,delta=v*dsum,sig=newVol(o.phi,o.sig,v,delta),ps=Math.sqrt(o.phi*o.phi+sig*sig),phi=1/Math.sqrt(1/(ps*ps)+1/v);
+      nxt[n]={mu:o.mu+phi*phi*dsum,phi:phi,sig:sig};
+    });
+    st=nxt;
+    var snap={};Object.keys(st).forEach(function(n){snap[n]={r:R0+SC*st[n].mu,rd:SC*st[n].phi,played:!!res[n]}});
+    snaps.push({day:day,s:snap});
+  });
+  return snaps;
+}
+
+/* ---------- compute view for a period ---------- */
+function compute(){
+  var all=ST.raw.matches,ms=ST.period==="all"?all:all.filter(function(m){return m.month===ST.period});
+  var snaps=runGlicko(ms),cur=snaps.length?snaps[snaps.length-1].s:{},prev=snaps.length>1?snaps[snaps.length-2].s:null;
+  var P={},hasRole=false,hasChamp=false;
+  ms.forEach(function(m,mi){
+    var tk={1:0,2:0},td={1:0,2:0};m.players.forEach(function(p){tk[p.team]+=p.k;td[p.team]+=p.dmg||0});
+    var best=m.players.reduce(function(a,b){return b.score>a.score?b:a});
+    var losers=m.players.filter(function(p){return!p.win}),svp=losers.length?losers.reduce(function(a,b){return b.score>a.score?b:a}):null;
+    m.players.forEach(function(p){
+      var o=P[p.name]=P[p.name]||{name:p.name,g:[]};
+      if(p.role)hasRole=true;if(p.champ)hasChamp=true;
+      o.g.push({m:m,p:p,kp:tk[p.team]?(p.k+p.a)/tk[p.team]*100:0,sh:td[p.team]?(p.dmg||0)/td[p.team]*100:0,mvp:p===best,svp:p===svp,
+        mates:m.players.filter(function(q){return q.team===p.team&&q!==p}).map(function(q){return q.name})});
+    });
+  });
+  var L=Object.keys(P).map(function(n){
+    var o=P[n],G=o.g,c=G.length,w=0,k=0,d=0,a=0,sc=0,kp=0,sh=0,dmg=0,gold=0,mins=0,mvp=0,svp=0,roles={},champs={},mates={};
+    G.forEach(function(x){var p=x.p;w+=p.win?1:0;k+=p.k;d+=p.d;a+=p.a;sc+=p.score||0;kp+=x.kp;sh+=x.sh;dmg+=p.dmg||0;gold+=p.gold||0;mins+=x.m.minutes||0;
+      if(x.mvp)mvp++;if(x.svp)svp++;if(p.role)roles[p.role]=(roles[p.role]||0)+1;if(p.champ)champs[p.champ]=(champs[p.champ]||0)+1;
+      x.mates.forEach(function(q){var t=mates[q]=mates[q]||{g:0,w:0};t.g++;t.w+=p.win?1:0})});
+    var streak=0;for(var i=G.length-1;i>=0&&G[i].p.win;i--)streak++;
+    var rr=cur[n]||{r:R0,rd:RD0};
+    return {name:n,g:G,n:c,w:w,l:c-w,wr:w/c*100,k:k/c,d:d/c,a:a/c,kda:(k+a)/Math.max(d,1),score:sc/c,kp:kp/c,share:sh/c,dmg:dmg/c,dpm:mins?dmg/mins:0,gpm:mins?gold/mins:0,
+      mvp:mvp,svp:svp,streak:streak,roleN:roles,champN:champs,rating:rr.r,rd:rr.rd,prev:prev&&prev[n]&&prev[n].played!==undefined&&hadGamesBefore(n,snaps)?prev[n]:null,
+      role:topKey(roles),champs:Object.keys(champs).map(function(c){return[c,champs[c]]}).sort(function(a,b){return b[1]-a[1]}),mates:mates,
+      hist:snaps.filter(function(s){return s.s[n]}).map(function(s){return{day:s.day,r:s.s[n].r,rd:s.s[n].rd}})};
+  });
+  // tiers by percentile of eligible players
+  var el=L.filter(function(p){return p.n>=5}).map(function(p){return p.rating}).sort(function(a,b){return b-a});
+  var th=el.length>=4?{S:el[Math.max(0,Math.ceil(el.length*.12)-1)],A:el[Math.max(0,Math.ceil(el.length*.35)-1)],B:el[Math.max(0,Math.ceil(el.length*.70)-1)]}:{S:1700,A:1600,B:1500};
+  L.forEach(function(p){p.tier=p.rd>150?"Q":p.rating>=th.S?"S":p.rating>=th.A?"A":p.rating>=th.B?"B":"C"});
+  // games-played top5 for 劳模
+  var work=L.slice().sort(function(a,b){return b.n-a.n}).slice(0,5).map(function(p){return p.name});
+  L.forEach(function(p){p.stamps=stampsOf(p,work)});
+  var days=snaps.map(function(s){return s.day});
+  return {list:L,by:Object.fromEntries(L.map(function(p){return[p.name,p]})),matches:ms,hasRole:hasRole,hasChamp:hasChamp,days:days,th:th,prevSnap:prev,snaps:snaps};
+}
+function hadGamesBefore(n,snaps){if(snaps.length<2)return false;var p=snaps[snaps.length-2].s[n];return!!p}
+function topKey(o){var b=null,v=0;for(var k in o)if(o[k]>v){v=o[k];b=k}return b}
+function stampsOf(p,work){
+  var s=[];
+  if(p.streak>=3)s.push(["手感火热 ×"+p.streak,"s-pink"]);
+  if(work.indexOf(p.name)>=0)s.push(["峡谷劳模","s-cocoa"]);
+  if(p.mvp>=3)s.push(["MVP 收割 ×"+p.mvp,"s-yel"]);
+  if(p.champs.length&&p.n>=5&&p.champs[0][1]/p.n>=.5)s.push(["绝活哥 · "+p.champs[0][0],"s-lav"]);
+  if(p.n>=5&&p.d<=4.6)s.push(["稳健少死","s-blue"]);
+  if(p.n>=5&&p.kp>=62)s.push(["团战发动机","s-green"]);
+  if(p.n>=5&&p.share>=25)s.push(["输出核心","s-pink"]);
+  if(p.n>=5&&p.a>=12&&p.share<17)s.push(["奶妈天使","s-green"]);
+  if(p.svp>=3)s.push(["虽败犹荣","s-lav"]);
+  if(p.n<=2)s.push(["新人报到","s-yel"]);
+  return s;
+}
+
+/* ---------- ranking for current filters ---------- */
+function ranked(minN){
+  var cur=V.list.filter(function(p){return p.n>=minN&&(!ST.role||p.role===ST.role)}).sort(function(a,b){return b.rating-a.rating});
+  cur.forEach(function(p,i){p.rank=i+1});
+  // previous ranks (same filter, games before last day)
+  var lastDay=V.days[V.days.length-1];
+  var prevList=V.list.filter(function(p){return p.prev&&p.g.filter(function(x){return x.m.day!==lastDay}).length>=minN&&(!ST.role||p.role===ST.role)})
+    .sort(function(a,b){return b.prev.r-a.prev.r});
+  var pr={};prevList.forEach(function(p,i){pr[p.name]=i+1});
+  cur.forEach(function(p){p.prank=pr[p.name]||null});
+  return cur;
+}
+function deltaHtml(p){
+  if(!V.prevSnap)return "";
+  if(!p.prank)return '<span class="dl nw">NEW</span>';
+  var d=p.prank-p.rank;return d>0?'<span class="dl up">↑'+d+'</span>':d<0?'<span class="dl dn">↓'+(-d)+'</span>':'<span class="dl eq">–</span>';
+}
+function tierHtml(p,cls){return p.tier==="Q"?'<div class="tier q '+(cls||"")+'" style="--c:var(--Q)">定级<br>中</div>':'<div class="tier '+(cls||"")+'" style="--c:var(--'+p.tier+')">'+p.tier+'</div>'}
+function stampHtml(s,max){return s.slice(0,max||9).map(function(x){return'<span class="stamp '+x[1]+'">'+esc(x[0])+'</span>'}).join("")}
+
+/* ---------- render ---------- */
+function renderHeader(){
+  var ms=V.matches,first=ms[0],last=ms[ms.length-1];
+  $("#sub").textContent=(ST.raw.region||"")+" · "+(first?first.time.slice(5,10):"")+" ~ "+(last?last.time.slice(5,10):"")+" · 不定期更新";
+  $("#mc").textContent="📝 "+ms.length+" 场对局";$("#pc").textContent="👥 "+V.list.length+" 位召唤师";
+  $("#src").textContent="数据：入库日志对应的对局详情（"+(ST.raw.region||"")+"）。只反映本手账收录的内战，不代表排位水平。";
+}
+function renderMe(){
+  var box=$("#me");var p=ST.me&&V.by[ST.me];
+  if(!ST.me){box.innerHTML='<div class="me hint"><span class="tape y"></span>📌 点开任意召唤师 →「设为我的 ID」，下次打开就能在这里看到自己的名次～</div>';return}
+  if(!p){box.innerHTML='<div class="me hint"><span class="tape y"></span>📌 本期还没有「'+esc(short(ST.me))+'」的对局记录 <button class="x" data-unme>换一个</button></div>';return}
+  var L=ranked(1),i=L.indexOf(p),above=i>0?L[i-1]:null;
+  box.innerHTML='<div class="me" data-n="'+esc(p.name)+'"><span class="tape y"></span><div class="av" style="background:'+avBg(p.name)+';width:44px;height:44px;font-size:18px;margin:0">'+esc(first(p.name))+'</div>'+
+    '<div class="who"><b>'+esc(short(p.name))+'</b> <span class="muted">'+esc(tagOf(p.name))+'</span>'+
+    '<div class="l2">我的名片 · 全员第 <b class="n">'+(i+1)+'</b> / '+L.length+' 名 · '+(p.tier==="Q"?"定级中":p.tier+" 级")+' · <span class="n">'+f(p.rating)+' ±'+f(p.rd)+'</span></div>'+
+    '<div class="l3">'+(above?'再涨 <em class="n">'+f(above.rating-p.rating+1)+'</em> 分就能超过 '+esc(short(above.name)):'🎉 你就是全员第一！')+'</div></div>'+
+    '<button class="x" data-unme>取消</button></div>';
+}
+function renderPodium(){
+  var L=ranked(Math.max(ST.minN,1)).slice(0,3),ord=[1,0,2],md=["🥈","🥇","🥉"],tp=["b","","y"];
+  $("#podium").innerHTML=ord.map(function(i){var p=L[i];if(!p)return"<div></div>";
+    return '<div class="pc p'+(i+1)+'" data-n="'+esc(p.name)+'"><span class="tape '+tp[ord.indexOf(i)]+'"></span><div class="medal">'+md[ord.indexOf(i)]+'</div>'+
+      '<div class="av" style="background:'+avBg(p.name)+'">'+esc(first(p.name))+'</div><div class="nm">'+esc(short(p.name))+'</div>'+
+      '<div class="r n">'+f(p.rating)+'<small> ±'+f(p.rd)+'</small></div><div class="st">'+p.w+'胜'+p.l+'负 · KDA '+f(p.kda,2)+'</div></div>'}).join("");
+}
+var COLS=[["rank","排名"],["name","召唤师"],["tier","评级<span class=\"qm\" data-rules>?</span>"],["rating","战力分<span class=\"qm\" data-rules>?</span>"],["n","场次"],["wr","胜率"],["kda","KDA"],["kp","参团"],["dmg","场均伤害"],["mvp","MVP"]];
+function renderTable(){
+  var L=ranked(ST.minN),q=ST.q.trim().toLowerCase();
+  var R=L.filter(function(p){return!q||p.name.toLowerCase().indexOf(q)>=0});
+  var key=ST.sort==="rank"||ST.sort==="tier"?"rating":ST.sort;
+  R.sort(function(a,b){var x=a[key],y=b[key];var c=typeof x==="string"?x.localeCompare(y,"zh"):x-y;return ST.desc?-c:c});
+  var hd='<div class="row hd">'+COLS.map(function(c){return'<div data-k="'+c[0]+'" class="'+(ST.sort===c[0]?"on":"")+'">'+c[1]+(ST.sort===c[0]?(ST.desc?" ↓":" ↑"):"")+'</div>'}).join("")+'</div>';
+  $("#tbl").innerHTML=hd+(R.length?R.map(function(p){
+    return '<div class="row pl'+(p.name===ST.me?" mine":"")+'" data-n="'+esc(p.name)+'">'+
+      '<div class="rk"><b class="n">'+p.rank+'</b>'+deltaHtml(p)+'</div>'+
+      '<div class="nmc"><div class="av" style="background:'+avBg(p.name)+'">'+esc(first(p.name))+'</div><div class="t"><b>'+esc(short(p.name))+'</b><span class="tg">'+esc(tagOf(p.name))+(p.champs.length?" / "+esc(p.champs[0][0]):"")+(p.role?" · "+esc(p.role):"")+'</span><div class="sts">'+stampHtml(p.stamps,2)+'</div></div></div>'+
+      '<div>'+tierHtml(p)+'</div>'+
+      '<div class="rt"><b class="n">'+f(p.rating)+'</b><small class="n">±'+f(p.rd)+'</small></div>'+
+      '<div class="n">'+p.n+'</div>'+
+      '<div class="wr"><span class="n">'+f(p.wr)+'%</span><div class="wbar"><i style="width:'+p.wr+'%"></i></div></div>'+
+      '<div><span class="n">'+f(p.kda,2)+'</span><div class="muted n">'+f(p.k,1)+'/'+f(p.d,1)+'/'+f(p.a,1)+'</div></div>'+
+      '<div class="n">'+f(p.kp)+'%</div><div class="n">'+(p.dmg>=1000?f(p.dmg/1000,1)+"k":f(p.dmg))+'</div><div class="n">'+p.mvp+'</div></div>'}).join(""):'<div class="empty">(´・ω・`) 没找到这位召唤师</div>');
+}
+function wilson(w,n){var z=1.28,p=w/n;return(p+z*z/(2*n)-z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n)))/(1+z*z/n)}
+function renderFun(){
+  var L=V.list,el=L.filter(function(p){return p.n>=5});
+  var pairs={};V.matches.forEach(function(m){[1,2].forEach(function(t){var T=m.players.filter(function(p){return p.team===t}).map(function(p){return p.name}).sort(),win=m.players.some(function(p){return p.team===t&&p.win});
+    for(var i=0;i<T.length;i++)for(var j=i+1;j<T.length;j++){var k=T[i]+"|"+T[j],o=pairs[k]=pairs[k]||{g:0,w:0};o.g++;o.w+=win?1:0}})});
+  var duo=Object.keys(pairs).filter(function(k){return pairs[k].g>=4}).map(function(k){var o=pairs[k];return{k:k,g:o.g,w:o.w,s:wilson(o.w,o.g)}}).sort(function(a,b){return b.s-a.s}).slice(0,5);
+  var lastDay=V.days[V.days.length-1];
+  var imp=L.filter(function(p){return p.prev&&p.g.some(function(x){return x.m.day===lastDay})}).map(function(p){return{p:p,v:p.rating-p.prev.r}}).sort(function(a,b){return b.v-a.v}).slice(0,5);
+  function top(arr,key,asc,fmt){return arr.slice().sort(function(a,b){return asc?a[key]-b[key]:b[key]-a[key]}).slice(0,5).map(function(p){return{p:p,v:fmt(p)}})}
+  var boards=[
+    ["💞","最佳拍档","同队 4 场以上 · 按保守胜率",duo.map(function(d){var a=d.k.split("|");return{html:'<span>'+esc(short(a[0]))+' & '+esc(short(a[1]))+'</span><b class="n">'+d.w+'胜'+(d.g-d.w)+'负</b>',n:a[0]}}),"y"],
+    ["📈","进步最快",lastDay?"最近一个内战日（"+lastDay.slice(5)+"）涨分":"",imp.map(function(x){return{p:x.p,v:(x.v>=0?"+":"")+f(x.v)}}),"g"],
+    ["🐝","峡谷劳模","本期场次最多",top(L,"n",false,function(p){return p.n+" 场"}),""],
+    ["👑","MVP 收割机","全场评分最高次数",top(L,"mvp",false,function(p){return p.mvp+" 次"}),"y"],
+    ["💎","虽败犹荣","败方评分最高次数",top(L,"svp",false,function(p){return p.svp+" 次"}),"b"],
+    ["🔥","人头狂魔","5 场以上 · 场均击杀",top(el,"k",false,function(p){return f(p.k,1)+" 杀"}),""],
+    ["🍡","助攻之王","5 场以上 · 场均助攻",top(el,"a",false,function(p){return f(p.a,1)+" 助"}),"g"],
+    ["⚔️","伤害之王","5 场以上 · 分均伤害",top(el,"dpm",false,function(p){return f(p.dpm)}),"y"],
+    ["🛡️","不死之身","5 场以上 · 场均死亡最少",top(el,"d",true,function(p){return f(p.d,1)+" 死"}),"b"]
+  ];
+  if(V.hasChamp)boards.push(["🎯","绝活榜","单英雄使用占比",top(el.filter(function(p){return p.champs.length}).map(function(p){p._cs=p.champs[0][1]/p.n;return p}),"_cs",false,function(p){return esc(p.champs[0][0])+" "+f(p._cs*100)+"%"}),"g"]);
+  if(L.some(function(p){return p.g.some(function(x){return x.p.taken})}))boards.push(["🧱","承伤之王","5 场以上 · 场均承伤",top(el.map(function(p){p._tk=p.g.reduce(function(s,x){return s+(x.p.taken||0)},0)/p.n;return p}),"_tk",false,function(p){return f(p._tk/1000,1)+"k"}),""]);
+  $("#fun").innerHTML=boards.map(function(b){return'<div class="fb"><span class="tape '+b[4]+'"></span><h3>'+b[0]+' '+b[1]+'</h3><div class="ds">'+b[2]+'</div><ol>'+
+    (b[3].length?b[3].map(function(x,i){return x.html?'<li data-n="'+esc(x.n)+'"><i>'+(i+1)+'</i>'+x.html+'</li>':'<li data-n="'+esc(x.p.name)+'"><i>'+(i+1)+'</i><span>'+esc(short(x.p.name))+'</span><b class="n">'+x.v+'</b></li>'}).join(""):'<li class="muted">暂时还没有人上榜～</li>')+'</ol></div>'}).join("");
+}
+function renderGames(){
+  var ms=V.matches.slice().reverse();
+  $("#games").innerHTML=ms.slice(0,ST.shown).map(function(m){
+    var best=m.players.reduce(function(a,b){return b.score>a.score?b:a}),los=m.players.filter(function(p){return!p.win}),svp=los.length?los.reduce(function(a,b){return b.score>a.score?b:a}):null;
+    function team(t){var P=m.players.filter(function(p){return p.team===t}),w=P.some(function(p){return p.win}),k=P.reduce(function(s,p){return s+p.k},0);
+      return'<div class="team '+(w?"w":"l")+'"><div class="th">'+(w?"🎉 胜利":"🍂 失败")+' · '+k+' 杀</div>'+P.map(function(p){return'<div class="p" data-n="'+esc(p.name)+'"><span>'+(p.champ?'<span class="muted">'+esc(p.champ)+'</span> ':'')+esc(short(p.name))+(p===best?'<span class="stamp s-yel">MVP</span>':p===svp?'<span class="stamp s-lav">SVP</span>':"")+'</span><span class="n muted">'+p.k+'/'+p.d+'/'+p.a+'</span><span class="n">'+f(p.score,1)+'</span></div>'}).join("")+'</div>'}
+    return'<div class="mt"><div class="hd"><b>'+esc(m.mode||"内战")+'</b><span class="n">'+esc(m.time.slice(5,16))+'</span>'+(m.minutes?'<span>⏱ '+f(m.minutes,1)+' 分钟</span>':"")+'</div><div class="teams">'+team(1)+team(2)+'</div></div>'}).join("")||'<div class="empty">本期还没有战报</div>';
+  $("#more").style.display=ST.shown>=ms.length?"none":"block";
+}
+function renderRoles(){
+  var box=$("#roles");if(!V.hasRole){box.innerHTML="";ST.role="";return}
+  var rs=["上单","打野","中单","下路","辅助"].filter(function(r){return V.list.some(function(p){return p.role===r})});
+  box.innerHTML=['<button class="pill'+(ST.role?"":" on")+'" data-r="">全部位置</button>'].concat(rs.map(function(r){return'<button class="pill'+(ST.role===r?" on":"")+'" data-r="'+r+'">'+r+'</button>'})).join("");
+}
+var ROLES=["上单","打野","中单","下路","辅助"],RCOL={"上单":"var(--pink)","打野":"var(--matcha)","中单":"var(--sky)","下路":"var(--butter)","辅助":"var(--lav)"};
+function renderRules(){
+  var th=V.th,lg=[["S","前 12%","≥ "+f(th.S)],["A","12–35%","≥ "+f(th.A)],["B","35–70%","≥ "+f(th.B)],["C","其余",""]];
+  $("#legend").innerHTML='<b style="font-size:13px">评级怎么分：</b>'+lg.map(function(x){return'<span class="lg"><span class="tier" style="--c:var(--'+x[0]+')">'+x[0]+'</span>'+x[1]+(x[2]?' <span class="n muted">'+x[2]+'</span>':"")+'</span>'}).join("")+
+    '<span class="lg"><span class="tier q" style="--c:var(--Q)">定级</span>± &gt; 150</span><span class="muted">（按本期 5 场以上的人排百分位）</span>';
+  // live example: biggest single-day gain among players with prior rating
+  var best=null;
+  V.list.forEach(function(p){for(var i=1;i<p.hist.length;i++){var d=p.hist[i].r-p.hist[i-1].r,day=p.hist[i].day,g=p.g.filter(function(x){return x.m.day===day});
+    if(g.length>=3&&p.hist[i-1].rd<130&&(!best||Math.abs(d)>Math.abs(best.d)))best={p:p,d:d,day:day,g:g,from:p.hist[i-1]}}});
+  if(!best){$("#eg").innerHTML="";return}
+  var w=best.g.filter(function(x){return x.p.win}).length,l=best.g.length-w;
+  var opp=best.g.map(function(x){var o=x.m.players.filter(function(q){return q.team!==x.p.team});return o.reduce(function(s,q){return s+(V.snaps.filter(function(s2){return s2.day<best.day}).slice(-1)[0]||{s:{}}).s[q.name]?s+((V.snaps.filter(function(s2){return s2.day<best.day}).slice(-1)[0].s[q.name]||{r:R0}).r):s+R0},0)/o.length});
+  var avgOpp=opp.reduce(function(a,b){return a+b},0)/opp.length;
+  $("#eg").innerHTML='🌰 <b>真实例子</b>：'+esc(short(best.p.name))+' 在 '+best.day.slice(5)+' 打了 '+best.g.length+' 场，<span class="pos">'+w+' 胜</span> <span class="neg">'+l+' 负</span>，对面平均约 <span class="n">'+f(avgOpp)+'</span> 分；赛前自己是 <span class="n">'+f(best.from.r)+' ±'+f(best.from.rd)+'</span> → 当天结算 <span class="'+(best.d>=0?"pos":"neg")+' n">'+(best.d>=0?"+":"")+f(best.d)+'</span> 分。点开任意召唤师，能看到他每个内战日的加减分明细。';
+}
+function renderPos(){
+  if(!V.hasRole){$("#rolegrid").innerHTML='<div class="muted">数据里还没有位置信息～</div>';}
+  else $("#rolegrid").innerHTML=ROLES.map(function(r){
+    var L=V.list.filter(function(p){return p.role===r&&p.n>=3}).sort(function(a,b){return b.rating-a.rating});
+    var tot=0,win=0;V.list.forEach(function(p){p.g.forEach(function(x){if(x.p.role===r){tot++;win+=x.p.win?1:0}})});
+    return'<div class="rc" style="--c:'+RCOL[r]+'"><h3>'+r+' <small>'+L.length+' 人</small></h3><ol>'+(L.length?L.slice(0,8).map(function(p,i){
+      var rn=p.roleN[r]||0;return'<li data-n="'+esc(p.name)+'"><i>'+(i+1)+'</i><span><b>'+esc(short(p.name))+'</b><small>'+rn+'/'+p.n+' 场'+(p.champs.length?' · '+esc(p.champs[0][0]):'')+'</small></span><span class="n">'+f(p.rating)+'</span></li>'}).join(""):'<li class="muted">暂无</li>')+'</ol></div>'}).join("");
+  // champion table
+  var C={};V.list.forEach(function(p){p.g.forEach(function(x){var q=x.p;if(!q.champ)return;var c=C[q.champ]=C[q.champ]||{name:q.champ,n:0,w:0,k:0,d:0,a:0,dmg:0,roles:{},pl:{}};
+    c.n++;c.w+=q.win?1:0;c.k+=q.k;c.d+=q.d;c.a+=q.a;c.dmg+=q.dmg||0;if(q.role)c.roles[q.role]=(c.roles[q.role]||0)+1;var u=c.pl[p.name]=c.pl[p.name]||{n:0,w:0};u.n++;u.w+=q.win?1:0})});
+  var arr=Object.keys(C).map(function(k){var c=C[k];c.wr=c.w/c.n*100;c.kda=(c.k+c.a)/Math.max(c.d,1);c.dm=c.dmg/c.n;c.role=topKey(c.roles);
+    c.best=Object.keys(c.pl).map(function(n){return{n:n,g:c.pl[n].n,w:c.pl[n].w}}).sort(function(a,b){return b.g-a.g||b.w-a.w})[0];return c});
+  V.champs=arr;
+  $("#chint").textContent=arr.length?"本期共出场 "+arr.length+" 个英雄":"数据里还没有英雄信息～";
+  $("#croles").innerHTML=['<button class="pill'+(ST.crole?"":" on")+'" data-cr="">全部</button>'].concat(ROLES.map(function(r){return'<button class="pill'+(ST.crole===r?" on":"")+'" data-cr="'+r+'">'+r+'</button>'})).join("");
+  renderChamps();
+}
+function renderChamps(){
+  var q=(ST.cq||"").trim(),A=(V.champs||[]).filter(function(c){return(!q||c.name.indexOf(q)>=0)&&(!ST.crole||c.role===ST.crole)});
+  var k=ST.csort||"n";A.sort(function(a,b){return ST.cdesc===false?a[k]-b[k]:b[k]-a[k]});
+  var H=[["name","英雄"],["n","场次"],["wr","胜率"],["kda","KDA"],["dm","场均伤害"],["best","最常用的人"]];
+  $("#ctbl").innerHTML='<div class="crow hd">'+H.map(function(h){return'<div data-ck="'+h[0]+'" class="'+(k===h[0]?"on":"")+'">'+h[1]+(k===h[0]?(ST.cdesc===false?" ↑":" ↓"):"")+'</div>'}).join("")+'</div>'+
+    (A.length?A.map(function(c){return'<div class="crow"><div class="cn"><span class="cicon" style="--h:'+avBg(c.name)+'">'+esc(Array.from(c.name)[0])+'</span><b>'+esc(c.name)+'</b>'+(c.role?'<span class="rtag">'+c.role+'</span>':'')+'</div>'+
+      '<div class="n">'+c.n+'</div><div class="n '+(c.wr>=50?"up":"dn")+'">'+f(c.wr)+'%</div><div><span class="n">'+f(c.kda,2)+'</span> <span class="muted n">'+f(c.k/c.n,1)+'/'+f(c.d/c.n,1)+'/'+f(c.a/c.n,1)+'</span></div>'+
+      '<div class="n">'+f(c.dm/1000,1)+'k</div><div class="best" data-n="'+esc(c.best.n)+'">'+esc(short(c.best.n))+' <span class="muted n">'+c.best.w+'胜'+(c.best.g-c.best.w)+'负</span></div></div>'}).join(""):'<div class="empty">(´・ω・`) 没有找到</div>');
+}
+function renderAll(){V=compute();renderHeader();renderRules();renderRoles();renderMe();renderPodium();renderTable();renderPos();renderFun();ST.shown=8;renderGames()}
+
+/* ---------- modal ---------- */
+function sparkSvg(p){
+  var h=[{r:R0}].concat(p.hist);if(h.length<2)return"";
+  var W=320,H=110,lo=Math.min.apply(null,h.map(function(x){return x.r}))-20,hi=Math.max.apply(null,h.map(function(x){return x.r}))+30;
+  var X=function(i){return 24+i/(h.length-1)*(W-48)},Y=function(v){return H-18-(v-lo)/(hi-lo)*(H-34)};
+  var pts=h.map(function(x,i){return X(i)+","+Y(x.r)}).join(" ");
+  var s='<line x1="16" x2="'+(W-10)+'" y1="'+Y(R0)+'" y2="'+Y(R0)+'" stroke="#e8d5c4" stroke-dasharray="4 4"/><polyline points="'+pts+'" fill="none" stroke="#e88f9c" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+  h.forEach(function(x,i){s+='<circle cx="'+X(i)+'" cy="'+Y(x.r)+'" r="4.5" fill="#fff" stroke="#5C4033" stroke-width="2"/>';
+    s+='<text x="'+X(i)+'" y="'+(H-4)+'" font-size="11" fill="#8a6b5a" text-anchor="middle">'+(i?x.day.slice(5):"起点")+'</text>'});
+  s+='<text x="'+X(h.length-1)+'" y="'+(Y(h[h.length-1].r)-10)+'" font-size="13" font-weight="900" fill="#5C4033" text-anchor="end">'+f(h[h.length-1].r)+'</text>';
+  return'<svg class="spark" viewBox="0 0 '+W+' '+H+'">'+s+'</svg>';
+}
+function dayTable(p){
+  var rows=[],prev={r:R0,rd:RD0};
+  p.hist.forEach(function(h){var g=p.g.filter(function(x){return x.m.day===h.day});
+    if(g.length){var w=g.filter(function(x){return x.p.win}).length,d=h.r-prev.r;rows.push('<tr><td>'+h.day.slice(5)+'</td><td>'+g.length+'</td><td><span class="pos">'+w+'</span>-<span class="neg">'+(g.length-w)+'</span></td><td class="'+(d>=0?"pos":"neg")+'">'+(d>=0?"+":"")+f(d)+'</td><td class="n">'+f(h.r)+'</td><td class="n muted">±'+f(h.rd)+'</td></tr>')}
+    prev=h});
+  return'<table class="dtbl" style="margin-top:8px"><tr><th>内战日</th><th>场次</th><th>胜负</th><th>加减分</th><th>结算后</th><th>±</th></tr>'+rows.reverse().join("")+'</table>';
+}
+function openP(name){
+  var p=V.by[name];if(!p)return;
+  var L=ranked(1),rk=L.indexOf(p)+1;
+  var mates=Object.keys(p.mates).filter(function(k){return p.mates[k].g>=2}).map(function(k){return{n:k,g:p.mates[k].g,w:p.mates[k].w}}).sort(function(a,b){return b.w/b.g-a.w/a.g||b.g-a.g}).slice(0,4);
+  var games=p.g.slice().reverse().slice(0,10);
+  $("#md").innerHTML='<span class="tape"></span><button class="cl" data-close aria-label="关闭">✕</button>'+
+    '<div class="mh"><div class="av" style="background:'+avBg(p.name)+'">'+esc(first(p.name))+'</div><div class="t"><h2>'+esc(short(p.name))+'</h2><div class="tg">'+esc(p.name)+(p.role?" · "+esc(p.role):"")+'</div></div>'+tierHtml(p)+'</div>'+
+    '<div class="big"><div class="r n">'+f(p.rating)+'<small> ±'+f(p.rd)+'</small></div><div class="k">全员第 <b class="n">'+rk+'</b> / '+L.length+'</div><div class="k">'+p.w+' 胜 '+p.l+' 负</div></div>'+
+    '<div class="wr"><span class="muted">胜率 '+f(p.wr)+'%</span><div class="wbar" style="height:10px"><i style="width:'+p.wr+'%"></i></div></div>'+
+    '<div class="grid"><div><span>场次</span><b class="n">'+p.n+'</b></div><div><span>KDA</span><b class="n">'+f(p.kda,2)+'</b></div><div><span>场均 杀/死/助</span><b class="n">'+f(p.k,1)+'/'+f(p.d,1)+'/'+f(p.a,1)+'</b></div>'+
+    '<div><span>参团率</span><b class="n">'+f(p.kp)+'%</b></div><div><span>场均伤害</span><b class="n">'+f(p.dmg)+'</b></div><div><span>MVP</span><b class="n">'+p.mvp+'</b></div></div>'+
+    (p.stamps.length?'<div class="sec">🪪 获得印章</div><div class="stamps">'+stampHtml(p.stamps)+'</div>':"")+
+    (p.hist.length>1?'<div class="sec">📈 战力走势（每个内战日）</div>'+sparkSvg(p)+dayTable(p):"")+
+    (Object.keys(p.roleN).length?'<div class="sec">🧭 各位置</div><div class="chips2">'+ROLES.filter(function(r){return p.roleN[r]}).map(function(r){var g=p.g.filter(function(x){return x.p.role===r}),w=g.filter(function(x){return x.p.win}).length;return'<span>'+r+'<b class="n">'+g.length+'场 '+f(w/g.length*100)+'%</b></span>'}).join("")+'</div>':"")+
+    (p.champs.length?'<div class="sec">🎯 英雄池</div><div class="chips2">'+p.champs.slice(0,8).map(function(c){var g=p.g.filter(function(x){return x.p.champ===c[0]}),w=g.filter(function(x){return x.p.win}).length;return'<span>'+esc(c[0])+'<b class="n">'+c[1]+'场 '+w+'胜</b></span>'}).join("")+'</div>':"")+
+    (mates.length?'<div class="sec">💞 常一起的队友</div><div class="mates">'+mates.map(function(m){return'<div data-n="'+esc(m.n)+'"><span>'+esc(short(m.n))+'</span><b class="n">'+m.w+'-'+(m.g-m.w)+'</b></div>'}).join("")+'</div>':"")+
+    '<div class="sec">📝 最近 '+games.length+' 场</div>'+games.map(function(x){var q=x.p;return'<div class="gl '+(q.win?"w":"")+'"><span class="s"></span><span>'+esc(x.m.time.slice(5,16))+(q.champ?' · '+esc(q.champ):'')+(q.role?' <span class="rtag">'+q.role+'</span>':'')+(x.mvp?' <span class="stamp s-yel">MVP</span>':x.svp?' <span class="stamp s-lav">SVP</span>':"")+'</span><span class="n">'+q.k+'/'+q.d+'/'+q.a+'</span><span class="n" style="text-align:right">'+f(q.score||0,1)+'</span></div>'}).join("")+
+    '<div class="acts"><button class="btn y" data-setme="'+esc(p.name)+'">'+(ST.me===p.name?"✓ 已是我的 ID":"📌 设为我的 ID")+'</button><button class="btn p" data-share="'+esc(p.name)+'">🖼 保存分享图</button></div><div class="shot" id="shot"></div>';
+  $("#ov").classList.add("on");$("#md").scrollTop=0;document.body.style.overflow="hidden";
+}
+function closeP(){$("#ov").classList.remove("on");document.body.style.overflow=""}
+
+/* ---------- share card (pure canvas, no external assets) ---------- */
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function share(name){
+  var p=V.by[name];if(!p)return;var L=ranked(1),rk=L.indexOf(p)+1;
+  var W=720,H=980,cv=document.createElement("canvas"),s=2;cv.width=W*s;cv.height=H*s;var c=cv.getContext("2d");c.scale(s,s);
+  var FONT='"Yuanti SC","YouYuan","PingFang SC","Microsoft YaHei",sans-serif',NUM='"Arial Rounded MT Bold","Segoe UI",sans-serif';
+  c.fillStyle="#FDF8F0";c.fillRect(0,0,W,H);c.fillStyle="#e3cdb8";for(var x=9;x<W;x+=18)for(var y=9;y<H;y+=18){c.beginPath();c.arc(x,y,1.1,0,7);c.fill()}
+  c.fillStyle="#F4C2C2";rr(c,46,66,W-84,H-120,22);c.fill();
+  c.fillStyle="#FFFBF2";rr(c,38,58,W-84,H-120,22);c.fill();c.lineWidth=3;c.strokeStyle="#5C4033";c.stroke();
+  c.save();c.translate(W/2,58);c.rotate(-.05);c.fillStyle="#f6cfd3";c.fillRect(-90,-16,180,32);c.fillStyle="#fbe3e5";for(var i=-90;i<90;i+=16)c.fillRect(i,-16,8,32);c.restore();
+  c.fillStyle=avBg(p.name);c.beginPath();c.arc(130,180,58,0,7);c.fill();c.lineWidth=3;c.stroke();
+  c.fillStyle="#5C4033";c.font="900 50px "+FONT;c.textAlign="center";c.textBaseline="middle";c.fillText(first(p.name),130,182);
+  c.textAlign="left";c.textBaseline="alphabetic";c.font="900 38px "+FONT;var nm=short(p.name);while(c.measureText(nm).width>330&&nm.length>1)nm=nm.slice(0,-1);if(nm!==short(p.name))nm+="…";c.fillText(nm,210,170);
+  c.font="600 20px "+FONT;c.fillStyle="#8a6b5a";c.fillText(tagOf(p.name)+"  ·  "+(ST.raw.region||""),212,206);
+  var tc={S:"#e8707f",A:"#e5a33a",B:"#6f9e5c",C:"#5f8fb8",Q:"#a99a8e"}[p.tier];
+  c.save();c.translate(596,178);c.rotate(-.18);c.strokeStyle=tc;c.lineWidth=4;c.beginPath();c.arc(0,0,52,0,7);c.stroke();c.lineWidth=1.5;c.beginPath();c.arc(0,0,44,0,7);c.stroke();
+  c.fillStyle=tc;c.textAlign="center";c.textBaseline="middle";if(p.tier==="Q"){c.font="900 24px "+FONT;c.fillText("定级中",0,2)}else{c.font="900 54px "+NUM;c.fillText(p.tier,0,4)}c.restore();
+  c.setLineDash([8,6]);c.strokeStyle="#b9a493";c.lineWidth=2;rr(c,74,262,W-156,150,16);c.stroke();c.setLineDash([]);
+  c.textAlign="left";c.fillStyle="#5C4033";c.font="900 84px "+NUM;c.fillText(f(p.rating),100,365);var rw=c.measureText(f(p.rating)).width;
+  c.font="700 28px "+NUM;c.fillStyle="#8a6b5a";c.fillText("±"+f(p.rd),110+rw,365);
+  c.font="700 22px "+FONT;c.fillText("Glicko-2 战力分",102,300);
+  c.textAlign="right";c.fillStyle="#5C4033";c.font="900 40px "+NUM;c.fillText("#"+rk,W-100,340);c.font="600 20px "+FONT;c.fillStyle="#8a6b5a";c.fillText("全员 "+L.length+" 人",W-100,375);
+  var st=[["场次",p.n],["胜率",f(p.wr)+"%"],["KDA",f(p.kda,2)],["场均 K/D/A",f(p.k,1)+"/"+f(p.d,1)+"/"+f(p.a,1)],["参团率",f(p.kp)+"%"],["MVP",p.mvp]];
+  st.forEach(function(x,i){var cx=74+(i%3)*((W-156)/3),cy=440+Math.floor(i/3)*112,w=(W-156)/3-14;c.fillStyle="#fff";rr(c,cx,cy,w,96,14);c.fill();c.strokeStyle="#5C4033";c.lineWidth=2;c.stroke();
+    c.textAlign="left";c.fillStyle="#8a6b5a";c.font="600 18px "+FONT;c.fillText(x[0],cx+16,cy+32);c.fillStyle="#5C4033";c.font="900 "+(String(x[1]).length>8?24:32)+"px "+NUM;c.fillText(String(x[1]),cx+16,cy+76)});
+  var sy=700;c.fillStyle="#5C4033";c.font="900 22px "+FONT;c.textAlign="left";c.fillText("🪪 获得印章",76,sy);
+  var sx=76,cy2=sy+24,cols={"s-pink":"#d4626f","s-green":"#5e8c4c","s-yel":"#c48a12","s-blue":"#4f7ea6","s-lav":"#8467b4","s-cocoa":"#8a6b5a"};
+  (p.stamps.length?p.stamps:[["继续加油","s-cocoa"]]).slice(0,6).forEach(function(x,i){c.font="800 20px "+FONT;var w=c.measureText(x[0]).width+26;if(sx+w>W-76){sx=76;cy2+=54}
+    c.save();c.translate(sx+w/2,cy2+20);c.rotate(i%2?.04:-.05);c.strokeStyle=cols[x[1]];c.lineWidth=2.5;rr(c,-w/2,-19,w,38,8);c.stroke();c.fillStyle=cols[x[1]];c.textAlign="center";c.textBaseline="middle";c.fillText(x[0],0,1);c.restore();sx+=w+14});
+  c.textAlign="center";c.fillStyle="#8a6b5a";c.font="600 18px "+FONT;
+  var ms=V.matches;c.fillText("峡谷内战手账 · "+(ms[0]?ms[0].time.slice(5,10):"")+" ~ "+(ms.length?ms[ms.length-1].time.slice(5,10):""),W/2,H-112);
+  c.font="600 15px "+FONT;c.fillStyle="#b9a493";c.fillText(location.host?location.host+location.pathname:"",W/2,H-86);
+  var url=cv.toDataURL("image/png");
+  $("#shot").innerHTML='<img alt="分享图" src="'+url+'"><p>📱 手机上长按图片即可保存或转发到群里</p><a class="btn" style="display:inline-block;margin-top:6px;text-decoration:none;color:inherit" download="'+esc(short(p.name))+'-战力卡.png" href="'+url+'">⬇ 下载图片</a>';
+  $("#shot").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",function(e){
+  var t=e.target;
+  if(t.closest("[data-close]")||t===$("#ov")){closeP();return}
+  var b;
+  if(b=t.closest("[data-setme]")){var n=b.getAttribute("data-setme");ST.me=ST.me===n?"":n;try{ST.me?localStorage.setItem(ME_KEY,ST.me):localStorage.removeItem(ME_KEY)}catch(_){}b.textContent=ST.me===n?"✓ 已是我的 ID":"📌 设为我的 ID";renderMe();renderTable();return}
+  if(b=t.closest("[data-share]")){share(b.getAttribute("data-share"));return}
+  if(t.closest("[data-rules]")){e.stopPropagation();$("#rules").scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(b=t.closest("#croles .pill")){ST.crole=b.getAttribute("data-cr");document.querySelectorAll("#croles .pill").forEach(function(x){x.classList.toggle("on",x===b)});renderChamps();return}
+  if(b=t.closest(".crow.hd [data-ck]")){var ck=b.getAttribute("data-ck");if(ck==="best")return;if(ST.csort===ck)ST.cdesc=ST.cdesc===false;else{ST.csort=ck;ST.cdesc=ck==="name"?false:true}renderChamps();return}
+  if(b=t.closest("[data-unme]")){e.stopPropagation();ST.me="";try{localStorage.removeItem(ME_KEY)}catch(_){}renderMe();renderTable();return}
+  if(b=t.closest(".tab")){ST.tab=b.getAttribute("data-t");document.querySelectorAll(".tab").forEach(function(x){x.classList.toggle("on",x===b)});document.querySelectorAll(".panel").forEach(function(x){x.classList.toggle("on",x.id==="p-"+ST.tab)});return}
+  if(b=t.closest("#minN .pill")){ST.minN=+b.getAttribute("data-v");document.querySelectorAll("#minN .pill").forEach(function(x){x.classList.toggle("on",x===b)});renderPodium();renderTable();return}
+  if(b=t.closest("#roles .pill")){ST.role=b.getAttribute("data-r");renderRoles();renderPodium();renderTable();return}
+  if(b=t.closest(".row.hd [data-k]")){var k=b.getAttribute("data-k");if(ST.sort===k)ST.desc=!ST.desc;else{ST.sort=k;ST.desc=k!=="name"&&k!=="rank"}renderTable();return}
+  if(t.closest("#more")){ST.shown+=10;renderGames();return}
+  if(b=t.closest("[data-n]")){openP(b.getAttribute("data-n"));return}
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeP()});
+var cqt;$("#cq").addEventListener("input",function(e){clearTimeout(cqt);cqt=setTimeout(function(){ST.cq=e.target.value;renderChamps()},80)});
+var qt;$("#q").addEventListener("input",function(e){clearTimeout(qt);qt=setTimeout(function(){ST.q=e.target.value;renderTable()},80)});
+$("#period").addEventListener("change",function(e){ST.period=e.target.value;renderAll()});
+
+/* ---------- load ---------- */
+function normalize(raw){
+  raw.matches.forEach(function(m){m.day=m.time.slice(0,10);m.month=m.time.slice(0,7);m.players.forEach(function(p){p.team=+p.team;p.win=!!p.win})});
+  raw.matches.sort(function(a,b){return a.time<b.time?-1:a.time>b.time?1:0});
+  return raw;
+}
+function start(raw){
+  ST.raw=normalize(raw);
+  var months=[];raw.matches.forEach(function(m){if(months.indexOf(m.month)<0)months.push(m.month)});months.reverse();
+  $("#period").innerHTML='<option value="all">📚 全部赛季</option>'+months.map(function(m){return'<option value="'+m+'">🗓 '+m.replace("-"," 年 ")+' 月</option>'}).join("");
+  renderAll();
+}
+if(window.__INLINE_DATA__)start(window.__INLINE_DATA__);
+else fetch("matches.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(start).catch(function(){$("#sub").textContent="(；´д｀) 数据加载失败，请稍后刷新"});
+})();
+</script>
+</body>
+</html>
