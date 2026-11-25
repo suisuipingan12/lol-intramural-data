@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>峡谷萌战力榜 ♡</title>
+<style>
+:root{
+  --bg:#fff6fa;--card:#ffffff;--line:#f6dce9;--line2:#ecd9ff;
+  --pink:#ff7eb6;--pink2:#ffb3d1;--purple:#a78bfa;--mint:#4fd1b0;--sky:#7ab8ff;--sun:#ffc94d;--peach:#ffa98a;
+  --tx:#5b4566;--tx2:#9a86a6;--tx3:#c1b1cb;
+  --win:#4fd1b0;--loss:#ff8fab;
+  --S:#ff7eb6;--A:#4fd1b0;--B:#7ab8ff;--C:#a78bfa;--D:#c1b1cb;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:14px/1.6 "YouYuan","幼圆","Yuanti SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;font-weight:600;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(#f9d3e5 1.2px,transparent 1.3px) 0 0/22px 22px,
+  radial-gradient(520px 380px at 90% 0,#ffd6ea,transparent 70%),radial-gradient(520px 420px at 0 30%,#e6dcff,transparent 70%),
+  radial-gradient(600px 400px at 100% 80%,#d4f7ec,transparent 70%),var(--bg)}
+a{color:inherit;text-decoration:none}
+.num{font-family:"Arial Rounded MT Bold","Segoe UI",system-ui,sans-serif;font-weight:800;font-variant-numeric:tabular-nums}
+
+nav{position:sticky;top:0;z-index:30;padding:12px 0}
+.nav-in{max-width:1180px;margin:auto;display:flex;align-items:center;gap:20px;padding:8px 14px 8px 20px;height:58px;background:#ffffffd9;backdrop-filter:blur(12px);
+  border:2px solid var(--line);border-radius:30px;box-shadow:0 6px 0 #f6dce9;width:calc(100% - 32px)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:16px;color:var(--pink)}
+.logo svg{width:28px;height:28px;animation:wob 3s ease-in-out infinite}
+@keyframes wob{50%{transform:rotate(-10deg) scale(1.08)}}
+.nav-links{display:flex;gap:4px}
+.nav-links a{padding:7px 16px;border-radius:20px;color:var(--tx2);font-size:13px;transition:.2s}
+.nav-links a:hover{color:#fff;background:var(--pink)}
+.nav-tag{margin-left:auto;font-size:12px;color:var(--tx2);background:#fff0f7;padding:7px 14px;border-radius:20px}
+.nav-tag b{color:var(--mint)}
+
+.wrap{max-width:1180px;margin:auto;padding:0 24px}
+
+.hero{padding:44px 0 24px;position:relative;text-align:center}
+.hero::before,.hero::after{position:absolute;font-size:34px;animation:float 4s ease-in-out infinite}
+.hero::before{content:"🌸";left:6%;top:60px}.hero::after{content:"⭐";right:7%;top:90px;animation-delay:-2s}
+@keyframes float{50%{transform:translateY(-12px) rotate(12deg)}}
+.eyebrow{display:inline-block;background:#fff;border:2px dashed var(--pink2);color:var(--pink);font-size:13px;padding:4px 16px;border-radius:20px;letter-spacing:2px}
+.eyebrow::before{content:"✿ "}.eyebrow::after{content:" ✿"}
+h1{font-size:clamp(34px,5.5vw,58px);line-height:1.15;margin:16px 0 10px;font-weight:900;letter-spacing:2px;color:var(--pink);
+  text-shadow:3px 3px 0 #ffe0ee,6px 6px 0 #f1e4ff}
+.hero p{color:var(--tx2);max-width:560px;margin:auto;font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.kpi{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:16px 18px;text-align:center;box-shadow:0 6px 0 var(--c,#f6dce9);transition:.2s}
+.kpi:hover{transform:translateY(-3px) rotate(-1deg)}
+.kpi:nth-child(1){--c:#ffd6e7}.kpi:nth-child(2){--c:#e3d9ff}.kpi:nth-child(3){--c:#ffe6b3}.kpi:nth-child(4){--c:#c9f2e6}
+.kpi .l{font-size:12px;color:var(--tx2)}
+.kpi .l::before{display:block;font-size:24px;margin-bottom:2px}
+.kpi:nth-child(1) .l::before{content:"🎮"}.kpi:nth-child(2) .l::before{content:"👯"}.kpi:nth-child(3) .l::before{content:"💥"}.kpi:nth-child(4) .l::before{content:"⏰"}
+.kpi .v{font-size:28px;color:var(--tx);margin-top:2px}
+.kpi .v small{font-size:13px;color:var(--tx2);margin-left:3px}
+
+section{padding:30px 0}
+.sh{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.sh h2{font-size:22px;font-weight:900;display:inline-flex;align-items:center;gap:8px;background:#fff;padding:6px 20px 6px 14px;border-radius:30px;border:2px solid var(--line);box-shadow:0 4px 0 #f6dce9}
+.sh h2::before{content:"🍬";font-size:20px}
+#awards h2::before{content:"🏅"}#rank h2::before{content:"📊"}#games h2::before{content:"🎀"}
+.sh .d{color:var(--tx2);font-size:12px;font-weight:500}
+
+.podium{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:18px;align-items:end;padding-top:20px}
+.pc{position:relative;border-radius:28px;padding:44px 20px 20px;text-align:center;cursor:pointer;transition:transform .3s cubic-bezier(.3,1.6,.5,1);
+  background:linear-gradient(180deg,var(--pg),#fff 70%);border:2px solid var(--pb);box-shadow:0 8px 0 var(--pb)}
+.pc:hover{transform:translateY(-6px) scale(1.02)}
+.pc.p1{--pg:#ffe2ef;--pb:#ffb3d1;padding-top:56px}
+.pc.p2{--pg:#e9e2ff;--pb:#d3c4ff}.pc.p3{--pg:#ffeadd;--pb:#ffcfb5}
+.pc.p1::before{content:"👑";position:absolute;top:-40px;left:50%;transform:translateX(-50%) rotate(-8deg);font-size:46px;animation:float 3s ease-in-out infinite}
+.medal{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:900;color:#fff;background:var(--pb);padding:2px 14px;border-radius:12px;white-space:nowrap}
+.p1 .medal{top:20px}
+.av{--c:var(--pink);width:84px;height:84px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:32px;font-weight:900;color:#fff;position:relative;
+  text-shadow:0 2px 0 #0002;background:linear-gradient(135deg,var(--h1),var(--h2));border:4px solid #fff;box-shadow:0 0 0 3px var(--c),0 6px 14px #ff7eb633}
+.p1 .av{width:104px;height:104px;font-size:40px}
+.av .tb{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);font-size:11px;padding:1px 10px;border-radius:10px;font-weight:900;color:#fff;background:var(--c);border:2px solid #fff;text-shadow:none}
+.pc .nm{font-size:18px;font-weight:900;margin-top:8px;word-break:break-all}
+.pc .tag{font-size:12px;color:var(--tx3)}
+.pc .pw{font-size:44px;color:var(--pink);line-height:1;margin:12px 0 2px;text-shadow:2px 2px 0 #ffe0ee}
+.p1 .pw{font-size:56px}
+.p2 .pw{color:var(--purple);text-shadow:2px 2px 0 #ece5ff}.p3 .pw{color:var(--peach);text-shadow:2px 2px 0 #ffeadd}
+.pc .pl{font-size:11px;color:var(--tx2);letter-spacing:2px}
+.pc .pl::before{content:"♡ 战力值 "}.pc .pl{font-size:0}.pc .pl::before{font-size:12px}
+.pc .row3{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;gap:6px}
+.pc .row3>div{background:#fff;border-radius:14px;padding:6px 0;border:2px solid var(--line)}
+.pc .row3 b{display:block;font-size:16px}.pc .row3 span{font-size:11px;color:var(--tx2)}
+
+.awards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.aw{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:22px;background:#fff;border:2px solid var(--line);cursor:pointer;transition:.25s cubic-bezier(.3,1.6,.5,1);box-shadow:0 5px 0 #f6dce9}
+.aw:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--pink2)}
+.aw .ic{width:50px;height:50px;flex:none;border-radius:18px;display:grid;place-items:center;font-size:26px;background:var(--ab,#ffe8f2)}
+.aw:nth-child(3n+2) .ic{--ab:#ebe4ff}.aw:nth-child(3n) .ic{--ab:#dcf7ef}
+.aw .t{font-size:12px;color:var(--pink);font-weight:900}
+.aw .n{font-size:15px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aw .v{font-size:12px;color:var(--tx2);font-weight:500}
+.aw .v b{color:var(--tx);font-size:15px;font-weight:900}
+.aw>div:last-child{min-width:0}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.search{flex:1;min-width:220px;position:relative}
+.search input{width:100%;background:#fff;border:2px solid var(--line);color:var(--tx);border-radius:30px;padding:11px 16px 11px 42px;font:inherit;outline:none;transition:.2s}
+.search input:focus{border-color:var(--pink2);box-shadow:0 0 0 4px #ff7eb622}
+.search input::placeholder{color:var(--tx3)}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:17px;color:var(--pink2)}
+.seg{display:flex;background:#fff;border:2px solid var(--line);border-radius:30px;padding:4px;gap:2px}
+.seg button{background:none;border:0;color:var(--tx2);padding:6px 14px;border-radius:20px;font:inherit;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--pink);color:#fff;box-shadow:0 3px 0 #e0609a}
+
+.tbl{background:#fff;border:2px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 8px 0 #f6dce9}
+.th,.tr{display:grid;grid-template-columns:52px minmax(170px,1.6fr) 64px 1.25fr .95fr 1fr 70px 1.05fr 130px;align-items:center;gap:10px;padding:0 18px}
+.th{height:46px;background:#fff0f7;color:var(--tx2);font-size:12px;border-bottom:2px dashed var(--line)}
+.th div{cursor:pointer;user-select:none;white-space:nowrap}.th div:hover{color:var(--pink)}
+.th div.on{color:var(--pink)}
+.tr{height:66px;border-bottom:1px dashed #f8e4ee;cursor:pointer;transition:background .15s}
+.tr:hover{background:#fff7fb}
+.tr:last-child{border-bottom:0}
+.tr.top1{background:linear-gradient(90deg,#ffe8f2,transparent 50%)}
+.tr.top2{background:linear-gradient(90deg,#f0ebff,transparent 50%)}
+.tr.top3{background:linear-gradient(90deg,#fff0e6,transparent 50%)}
+.rk{font-size:16px;font-weight:900;color:var(--tx3);text-align:center}
+.top1 .rk,.top2 .rk,.top3 .rk{font-size:0}
+.top1 .rk::before{content:"🥇";font-size:24px}.top2 .rk::before{content:"🥈";font-size:24px}.top3 .rk::before{content:"🥉";font-size:24px}
+.pl{display:flex;align-items:center;gap:12px;min-width:0}
+.mini{--c:var(--pink);width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:16px;color:#fff;text-shadow:0 1px 0 #0002;
+  background:linear-gradient(135deg,var(--h1),var(--h2));border:3px solid #fff;box-shadow:0 0 0 2px var(--c)}
+.pl .nm{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl .tg{font-size:11px;color:var(--tx3);font-weight:500}
+.tier{font-weight:900;font-size:13px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--c);box-shadow:0 3px 0 color-mix(in srgb,var(--c) 70%,#000 10%)}
+.pwr{display:flex;align-items:center;gap:10px}
+.pwr b{font-size:17px;width:42px;color:var(--pink)}
+.bar{flex:1;height:10px;border-radius:6px;background:#fbeaf2;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:6px;background:repeating-linear-gradient(-45deg,#ff9cc6 0 6px,#ff7eb6 6px 12px)}
+.wr{display:flex;align-items:center;gap:10px}
+.ring{width:36px;height:36px;flex:none}
+.wr b{font-size:14px}.wr span{display:block;font-size:11px;color:var(--tx3);font-weight:500}
+.kda b{font-size:15px}.kda span{display:block;font-size:11px;color:var(--tx2);font-weight:500}
+.k-hi{color:var(--pink)}.k-md{color:var(--mint)}.k-lo{color:var(--tx)}
+.sc{font-size:15px;font-weight:900;color:var(--purple)}
+.dmg b{font-size:13px}.dmg .bar{height:7px;margin-top:5px}.dmg .bar i{background:repeating-linear-gradient(-45deg,#ffcf73 0 5px,#ffb84d 5px 10px)}
+.rec{display:flex;gap:3px}
+.rec i{width:10px;height:10px;border-radius:50%;background:var(--loss)}
+.rec i.w{background:var(--win)}
+.rec i.e{background:#f3e6ee}
+.empty{padding:40px;text-align:center;color:var(--tx3)}
+.empty::before{content:"(｡•́︿•̀｡) ";}
+
+.ml{display:flex;flex-direction:column;gap:12px}
+.mt{display:grid;grid-template-columns:150px 1fr 1fr;gap:14px;align-items:center;padding:14px 16px;border-radius:24px;background:#fff;border:2px solid var(--line);box-shadow:0 5px 0 #f6dce9}
+.mt .info b{font-size:14px;color:var(--pink)}.mt .info div{font-size:12px;color:var(--tx2);font-weight:500}
+.mt .info b::before{content:"🎲 "}
+.team{display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:16px;background:#fff1f5;border:2px solid #ffd9e3}
+.team.w{background:#ecfbf6;border-color:#bdeedf}
+.team .hd{font-size:12px;font-weight:900;color:var(--loss);margin-bottom:2px}
+.team.w .hd{color:var(--win)}
+.team .hd::before{content:"💧 "}.team.w .hd::before{content:"🎉 "}
+.team .p{display:grid;grid-template-columns:1fr 70px 40px;gap:8px;font-size:12px;cursor:pointer;border-radius:8px;padding:1px 6px}
+.team .p:hover{background:#ffffffb0}
+.team .p span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team .p span:nth-child(2){color:var(--tx2);text-align:right}.team .p span:nth-child(3){text-align:right;color:var(--purple)}
+.mvp{font-size:9px;font-weight:900;padding:1px 5px;border-radius:8px;background:var(--sun);color:#fff;margin-left:4px;vertical-align:1px}
+.svp{background:var(--purple)}
+.more{display:block;margin:18px auto 0;background:var(--pink);border:0;color:#fff;padding:11px 30px;border-radius:30px;font:inherit;cursor:pointer;box-shadow:0 5px 0 #e0609a;transition:.15s}
+.more:hover{transform:translateY(2px);box-shadow:0 3px 0 #e0609a}
+.more::after{content:" ♡"}
+
+.ov{position:fixed;inset:0;background:#5b456644;backdrop-filter:blur(4px);z-index:40;opacity:0;pointer-events:none;transition:.25s}
+.ov.on{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:12px;right:12px;bottom:12px;width:min(540px,calc(100vw - 24px));z-index:41;background:#fffafc;border:2px solid var(--line);border-radius:28px;
+  transform:translateX(110%);transition:transform .4s cubic-bezier(.3,1.3,.5,1);overflow-y:auto;box-shadow:0 20px 50px #ff7eb633}
+.dr.on{transform:none}
+.dr .x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:2px solid var(--line);background:#fff;color:var(--pink);font-size:20px;cursor:pointer;z-index:2}
+.dr .x:hover{background:var(--pink);color:#fff}
+.dh{padding:28px 24px 20px;display:flex;gap:18px;align-items:center;background:linear-gradient(180deg,#ffe8f2,#fffafc);border-radius:26px 26px 0 0}
+.dh .av{margin:0;width:78px;height:78px;font-size:30px;flex:none}
+.dh .nm{font-size:22px;font-weight:900}.dh .tg{color:var(--tx3);font-size:12px;font-weight:500}
+.dh .chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{font-size:11px;padding:2px 10px;border-radius:12px;background:#fff;border:2px solid var(--line);color:var(--tx2)}
+.chip.g{background:var(--pink);border-color:var(--pink);color:#fff}
+.dbody{padding:8px 24px 36px}
+.radar-wrap{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sg div{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 12px}
+.sg span{font-size:11px;color:var(--tx2)}.sg b{display:block;font-size:18px;color:var(--pink)}
+.dbody h3{font-size:15px;margin:22px 0 12px;color:var(--tx)}
+.dbody h3::before{content:"📝 "}
+.gm{display:grid;grid-template-columns:8px 78px 1fr 78px 56px;gap:12px;align-items:center;padding:10px 12px 10px 0;border-radius:18px;background:#fff1f5;margin-bottom:8px;overflow:hidden;border:2px solid #ffe0e9}
+.gm.w{background:#ecfbf6;border-color:#c9f2e6}
+.gm .s{align-self:stretch;background:var(--loss)}.gm.w .s{background:var(--win)}
+.gm .r b{font-size:13px;color:var(--loss)}.gm.w .r b{color:var(--win)}
+.gm .r div{font-size:11px;color:var(--tx2);font-weight:500}
+.gm .k b{font-size:15px}.gm .k span{color:var(--tx3);margin:0 2px}.gm .k .dd{color:var(--loss)}
+.gm .k div{font-size:11px;color:var(--tx2);font-weight:500}
+.gm .o{font-size:11px;color:var(--tx2);text-align:right;font-weight:500}.gm .o b{display:block;font-size:13px;color:var(--tx)}
+.gm .scb{justify-self:end;font-size:13px;font-weight:900;padding:4px 9px;border-radius:12px;background:#fff;color:var(--purple)}
+
+footer{margin-top:30px;padding:24px;color:var(--tx2);font-size:12px;line-height:1.9;font-weight:500;background:#fff;border:2px dashed var(--line);border-radius:24px;margin-bottom:40px}
+footer b{color:var(--pink)}
+footer::after{content:"— 祝大家天天上分 (๑•̀ㅂ•́)و✧ —";display:block;text-align:center;margin-top:12px;color:var(--pink2);font-weight:900}
+
+@media(max-width:980px){
+  .kpis{grid-template-columns:repeat(2,1fr)}.aw{padding:12px;gap:10px}.aw .ic{width:42px;height:42px;font-size:21px}
+  .th,.tr{grid-template-columns:40px minmax(140px,1.6fr) 50px 1.2fr .9fr 1fr}
+  .th div:nth-child(n+7),.tr>div:nth-child(n+7){display:none}
+  .mt{grid-template-columns:1fr}.nav-links{display:none}.hero::before,.hero::after{display:none}
+}
+@media(max-width:640px){
+  .wrap{padding:0 14px}.podium{grid-template-columns:1fr;gap:30px}.pc.p1{order:-1}.awards{grid-template-columns:1fr}
+  .th,.tr{grid-template-columns:34px 1fr 44px 62px;gap:8px;padding:0 12px}
+  .th div:nth-child(n+5),.tr>div:nth-child(n+5){display:none}
+  .pwr .bar{display:none}.radar-wrap{grid-template-columns:1fr;justify-items:center}.gm{grid-template-columns:6px 64px 1fr 56px}.gm .o{display:none}
+}
+
+/* ---- combo additions ---- */
+.pc .pw.tierL{font-family:"Arial Rounded MT Bold","Segoe UI",sans-serif;font-weight:900;font-size:64px;line-height:1;margin:12px 0 4px;color:var(--c);
+  text-shadow:3px 3px 0 #fff,6px 6px 0 color-mix(in srgb,var(--c) 30%,transparent)}
+.p1 .pw.tierL{font-size:80px}
+.pc .pe{font-size:12px;color:var(--tx2)}.pc .pe small{color:var(--tx3);font-weight:500}
+.pwr b small{display:block;font-size:10px;color:var(--tx3);font-weight:500;margin-top:-2px}
+.pwr b{line-height:1.15}
+.tier{width:38px;height:38px;font-size:16px}
+.sc.pos{color:var(--mint)}.sc.neg{color:var(--loss)}
+.gm .scb.pos{color:var(--mint)}.gm .scb.neg{color:var(--loss)}
+.duos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#duos h2::before{content:"💞"}
+.du{display:grid;grid-template-columns:22px 62px 1fr auto;gap:10px;align-items:center;padding:14px 16px;background:#fff;border:2px solid var(--line);border-radius:22px;box-shadow:0 5px 0 #f6dce9;transition:.25s cubic-bezier(.3,1.6,.5,1)}
+.du:hover{transform:translateY(-3px);border-color:var(--pink2)}
+.du-i{font-weight:900;color:var(--pink2);font-size:16px}
+.du-av{display:flex}.du-av .mini{width:36px;height:36px;font-size:14px;cursor:pointer}.du-av .mini+.mini{margin-left:-12px}
+.du-n{min-width:0;font-size:13px;line-height:1.35}.du-n b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.du-n b:hover{color:var(--pink)}
+.du-n span{font-size:10px;color:var(--pink2)}
+.du-r{text-align:right}.du-r b{display:block;font-size:18px;color:var(--mint)}.du-r span{font-size:11px;color:var(--tx3);font-weight:500}
+.elo-c{background:#fff;border:2px solid var(--line);border-radius:18px;padding:10px 6px 4px}
+@media(max-width:980px){.duos{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.duos{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <div class="logo"><svg viewBox="0 0 32 32" fill="none"><path d="M16 28S3 20 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20 16 28 16 28z" fill="#ff7eb6"/><circle cx="11" cy="12" r="2" fill="#fff"/></svg>峡谷萌战力</div>
+  <div class="nav-links"><a href="#rank">实力榜</a><a href="#awards">荣誉殿堂</a><a href="#games">对局记录</a></div>
+  <div class="nav-tag" id="navtag"></div>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">内战小报 · 第 2 期</div>
+    <h1>峡谷萌战力榜</h1>
+    <p>按每场胜负和对手强弱计算等级分，再换成 S / A / B / C / D 评级，打什么位置都公平。点一点小伙伴的名字，就能看 TA 的专属小档案哦～</p>
+    <div class="kpis" id="kpis"></div>
+  </header>
+
+  <section id="top"><div class="sh"><h2>今日最闪亮</h2><div class="d" id="topd"></div></div><div class="podium" id="podium"></div></section>
+  <section id="awards"><div class="sh"><h2>小红花墙</h2><div class="d">至少 5 场</div></div><div class="awards" id="aw"></div></section>
+
+  <section id="duos"><div class="sh"><h2>最佳拍档</h2><div class="d">同队至少 4 场 · 按保守胜率排序</div></div><div class="duos" id="duo"></div></section>
+
+  <section id="rank">
+    <div class="sh"><h2>战力排排坐</h2><div class="d" id="cnt"></div></div>
+    <div class="tools">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="找找你的小伙伴～"></div>
+      <div class="seg" id="seg"><button data-v="1">全部</button><button data-v="3">3场+</button><button data-v="5" class="on">5场+</button><button data-v="10">10场+</button></div>
+    </div>
+    <div class="tbl"><div class="th" id="th"></div><div id="tb"></div></div>
+  </section>
+
+  <section id="games"><div class="sh"><h2>对局小日记</h2><div class="d">最新在前 · MVP 为全场最高评分，SVP 为败方最高评分</div></div><div class="ml" id="ml"></div><button class="more" id="more">加载更多</button></section>
+
+  <footer>
+    <b>等级分</b>：每人从 1500 分起步。每场根据两队平均分算出赢面，爆冷赢强队加分多、赢弱队加分少；个人评分高于同场平均的人，赢了多加、输了少扣（最多 ±37%）。只看胜负和发挥，不看伤害经济，辅助不吃亏。<br>
+    <b>评级</b>：S ≥ 1620 · A ≥ 1560 · B ≥ 1500 · C ≥ 1440 · D &lt; 1440。“±”是误差范围，场次越少越不准。<br>
+    <b>超常发挥</b>：个人评分减去同场 10 人平均评分，越高说明在同一场里比别人打得越好。<br>
+    数据来源：入库日志对应对局详情（<span id="ft"></span>）。仅反映本批内战样本，不代表排位实力。
+  </footer>
+</div>
+
+<div class="ov" id="ov"></div>
+<aside class="dr" id="dr"><button class="x" id="x">×</button><div id="drc"></div></aside>
+
+<script>
+const DATA={"modes":["五子登科","满载SUV"],"matches":[["11-20 18:37:42",0,15.8,["兄弟买脚本吗#27170","WangAlong#47662","DeAnima#65439","麦兜爱吃猪大肠#13917","百粒挑一#34804"],["秦生十月#76063","花仙兽开花#5555","薇薇简#73460","回首往事展望未来#38126","梁钲朋#65402"],1],["11-20 19:03:41",1,33.2,["回首往事展望未来#38126","花仙兽开花#5555","百粒挑一#34804","DeAnima#65439","秦生十月#76063"],["麦兜爱吃猪大肠#13917","WangAlong#47662","梁钲朋#65402","薇薇简#73460","兄弟买脚本吗#27170"],1],["11-20 19:07:38",0,24.6,["vae#78484","vraal#50939","华浅儿#77827","ChengZhi#68506","满怀发烧情#38682"],["一口甜#80388","鸡蛋汉堡#25809","快哄哄#75763","声悠悠#64339","中二患者远离我#46006"],1],["11-20 19:55:05",0,25.1,["命定之死#71129","vraal#50939","是小林呀#80660","声悠悠#64339","满怀发烧情#38682"],["一口甜#80388","vae#78484","本螂姓螳不姓蟑#93528","ChengZhi#68506","听风讲她的故事#37523"],1],["11-20 20:26:50",1,29.9,["麦兜爱吃猪大肠#13917","贪吃乌云#50063","小鳥遊六花#14620","愿你爱我岁岁年年#28949","树中叶#85270"],["花仙兽开花#5555","魔力卷卷#26416","WangAlong#47662","不存在的麻衣学姐#22496","T1丨BUG#0520"],1],["11-20 21:09:22",0,33.6,["愿你爱我岁岁年年#28949","贪吃乌云#50063","WangAlong#47662","不存在的麻衣学姐#22496","麦兜爱吃猪大肠#13917"],["小鳥遊六花#14620","魔力卷卷#26416","花仙兽开花#5555","树中叶#85270","T1丨BUG#0520"],1],["11-20 21:42:51",1,22.2,["古德咪咪妮#95284","小薯咪#44539","小牛TAdie#24733","红心A#16819","素衣若雪#21790"],["命定之死#71129","惹残香#86440","声悠悠#64339","听风讲她的故事#37523","别来无恙#50566"],1],["11-20 22:04:49",1,35.3,["魔力卷卷#26416","不存在的麻衣学姐#22496","小鳥遊六花#14620","树中叶#85270","麦兜爱吃猪大肠#13917"],["Serein#20205","花仙兽开花#5555","不将就#34291","风会代替我吧#20551","T1丨BUG#0520"],1],["11-20 22:17:32",0,28,["惹残香#86440","声悠悠#64339","命定之死#71129","小牛TAdie#24733","别来无恙#50566"],["古德咪咪妮#95284","素衣若雪#21790","红心A#16819","小薯咪#44539","听风讲她的故事#37523"],1],["11-20 22:57:32",1,26.6,["命定之死#71129","别来无恙#50566","小薯咪#44539","听风讲她的故事#37523","古德咪咪妮#95284"],["花仙兽开花#5555","小鳥遊六花#14620","红心A#16819","声悠悠#64339","惹残香#86440"],1],["11-20 23:43:29",1,24,["别来无恙#50566","古德咪咪妮#95284","小薯咪#44539","小鳥遊六花#14620","听风讲她的故事#37523"],["声悠悠#64339","命定之死#71129","红心A#16819","许缘心#74756","花仙兽开花#5555"],1],["11-21 00:24:55",1,15.6,["Mochi#17985","小鳥遊六花#14620","羽落秋去#54613","听风讲她的故事#37523","别来无恙#50566"],["小薯咪#44539","声悠悠#64339","红心A#16819","命定之死#71129","古德咪咪妮#95284"],1],["11-21 00:51:33",0,36.4,["羽落秋去#54613","别来无恙#50566","声悠悠#64339","小薯咪#44539","小红书飞科#49536"],["听风讲她的故事#37523","Mochi#17985","Zeus#88894","古德咪咪妮#95284","红心A#16819"],1],["11-21 01:41:17",1,40.2,["小薯咪#44539","Mochi#17985","Zeus#88894","古德咪咪妮#95284","听风讲她的故事#37523"],["声悠悠#64339","别来无恙#50566","红心A#16819","回首往事展望未来#38126","小红书飞科#49536"],1],["11-21 19:09:32",1,15.2,["樱桃小丸犊子丶#80836","柑橘乌云#71166","小学生坑大神啦#17192","七旬白袜黑皮老头#29031","名字有什么好取的#47216"],["风会代替我吧#20551","Serein#20205","theshy#80228","晚香玉#12334","七里香#34378"],1],["11-21 19:33:03",0,45.9,["theshy#80228","Serein#20205","风会代替我吧#20551","七旬白袜黑皮老头#29031","樱桃小丸犊子丶#80836"],["小学生坑大神啦#17192","柑橘乌云#71166","七里香#34378","晚香玉#12334","名字有什么好取的#47216"],1],["11-21 20:54:39",0,27.1,["怎么会舍得放弃i#45111","魔力卷卷#26416","atgr1584#14177","T1丨BUG#0520","声悠悠#64339"],["圆圆居#80711","MMZ#16948","贪睡小猫#23708","一个养蝉的男人#72382","Off#86458"],1],["11-21 20:58:16",1,30.1,["小鹿乱撞1th#16741","焦泥座人金克斯#71580","命定之死#71129","不惹小u大哥生气#83576","Zeus#88894"],["不吃蛋糕小笨蛋#75538","不将就#34291","回首往事展望未来#38126","风会代替我吧#20551","viper3#56350"],1],["11-21 21:08:07",1,20.1,["花仙兽开花#5555","惹残香#86440","锐锐不雯#53416","小小怪下士#71024","樱桃小丸犊子丶#80836"],["奇迹行者就是要刷#84208","小刘可有可无#14489","黄黄黄瑞奇#27438","vraal#50939","花千树#10000"],1],["11-21 21:26:44",1,27.6,["东方月初#29645","小薯咪#44539","良人与苦瓜大王#99293","华浅儿#77827","古德咪咪妮#95284"],["红心A#16819","愿你爱我岁岁年年#28949","Serein#20205","樱花雨#99357","听风讲她的故事#37523"],1],["11-21 21:30:07",1,31,["T1丨BUG#0520","贪睡小猫#23708","atgr1584#14177","怎么会舍得放弃i#45111","圆圆居#80711"],["声悠悠#64339","魔力卷卷#26416","MMZ#16948","一个养蝉的男人#72382","Off#86458"],1],["11-21 21:34:55",0,40,["回首往事展望未来#38126","Zeus#88894","不吃蛋糕小笨蛋#75538","小鹿乱撞1th#16741","焦泥座人金克斯#71580"],["风会代替我吧#20551","不惹小u大哥生气#83576","不将就#34291","命定之死#71129","viper3#56350"],1],["11-21 21:37:34",0,30.1,["小鳥遊六花#14620","小薇来信#23949","vraal#50939","花千树#10000","小刘可有可无#14489"],["花仙兽开花#5555","锐锐不雯#53416","惹残香#86440","奇迹行者就是要刷#84208","樱桃小丸犊子丶#80836"],1],["11-21 22:02:55",1,22.3,["良人与苦瓜大王#99293","东方月初#29645","华浅儿#77827","小薯咪#44539","古德咪咪妮#95284"],["愿你爱我岁岁年年#28949","红心A#16819","Serein#20205","听风讲她的故事#37523","樱花雨#99357"],1],["11-21 22:09:38",1,27.3,["怎么会舍得放弃i#45111","魔力卷卷#26416","MMZ#16948","一个养蝉的男人#72382","atgr1584#14177"],["圆圆居#80711","声悠悠#64339","Off#86458","贪睡小猫#23708","T1丨BUG#0520"],1],["11-21 22:19:59",1,24.4,["不将就#34291","风会代替我吧#20551","不惹小u大哥生气#83576","viper3#56350","命定之死#71129"],["Zeus#88894","不吃蛋糕小笨蛋#75538","回首往事展望未来#38126","小鹿乱撞1th#16741","焦泥座人金克斯#71580"],1],["11-21 22:23:10",0,33.1,["小薇来信#23949","我等打野你在等啥#82687","小鳥遊六花#14620","花仙兽开花#5555","vraal#50939"],["花千树#10000","人偶泪#66226","小刘可有可无#14489","锐锐不雯#53416","惹残香#86440"],1],["11-21 22:45:21",1,31.4,["atgr1584#14177","T1丨BUG#0520","MMZ#16948","魔力卷卷#26416","怎么会舍得放弃i#45111"],["一个养蝉的男人#72382","声悠悠#64339","Off#86458","圆圆居#80711","一枪一个队友#74987"],1],["11-21 23:26:21",1,28.2,["圆圆居#80711","思新u#17723","怎么会舍得放弃i#45111","一个养蝉的男人#72382","小鳥遊六花#14620"],["一枪一个队友#74987","魔力卷卷#26416","T1丨BUG#0520","Off#86458","atgr1584#14177"],1],["11-22 18:44:52",1,36.2,["T1丨BUG#0520","IvenivenIven#83132","atgr1584#14177","命定之死#71129","魔力卷卷#26416"],["花仙兽开花#5555","听风讲她的故事#37523","怎么会舍得放弃i#45111","圆圆居#80711","鸡蛋汉堡#25809"],1],["11-22 19:25:36",0,26.2,["贪吃乌云#50063","vraal#50939","兄弟买脚本吗#27170","黄黄黄瑞奇#27438","蓝风铃#94187"],["一枪一个队友#74987","麦兜爱吃猪大肠#13917","WangAlong#47662","小刘可有可无#14489","古德咪咪妮#95284"],1],["11-22 19:31:12",1,33.7,["怎么会舍得放弃i#45111","圆圆居#80711","听风讲她的故事#37523","命定之死#71129","IvenivenIven#83132"],["atgr1584#14177","T1丨BUG#0520","鸡蛋汉堡#25809","魔力卷卷#26416","花仙兽开花#5555"],1],["11-22 20:08:36",0,20.3,["WangAlong#47662","小薇来信#23949","蓝风铃#94187","小刘可有可无#14489","vraal#50939"],["贪吃乌云#50063","小薯咪#44539","一枪一个队友#74987","Serein#20205","古德咪咪妮#95284"],1],["11-22 20:13:17",1,15.8,["魔力卷卷#26416","鸡蛋汉堡#25809","花仙兽开花#5555","T1丨BUG#0520","梁钲朋#65402"],["听风讲她的故事#37523","IvenivenIven#83132","命定之死#71129","怎么会舍得放弃i#45111","圆圆居#80711"],1],["11-22 20:39:05",1,26.7,["蓝风铃#94187","小刘可有可无#14489","一枪一个队友#74987","小薇来信#23949","vraal#50939"],["IvenivenIven#83132","古德咪咪妮#95284","WangAlong#47662","听风讲她的故事#37523","小薯咪#44539"],1],["11-22 20:45:13",0,33.7,["花仙兽开花#5555","梁钲朋#65402","麦兜爱吃猪大肠#13917","T1丨BUG#0520","圆圆居#80711"],["鸡蛋汉堡#25809","命定之死#71129","魔力卷卷#26416","Serein#20205","怎么会舍得放弃i#45111"],1],["11-22 21:07:10",0,23.1,["愿你爱我岁岁年年#28949","菊花散一桌#23515","良人与苦瓜大王#99293","我等打野你在等啥#82687","中二患者远离我#46006"],["百粒挑一#34804","声悠悠#64339","不吃蛋糕小笨蛋#75538","惹残香#86440","侥幸从未得到#82697"],1],["11-22 21:24:23",1,35.8,["蓝风铃#94187","庭中三千梨花树#38028","不将就#34291","一条快乐瓜皮#59397","小刘可有可无#14489"],["小薇来信#23949","华浅儿#77827","vraal#50939","糖炒苏沫沫#68583","一枪一个队友#74987"],1],["11-22 21:49:55",0,31,["良人与苦瓜大王#99293","不吃蛋糕小笨蛋#75538","中华民族实现复兴#38821","惹残香#86440","我等打野你在等啥#82687"],["别来无恙#50566","声悠悠#64339","中二患者远离我#46006","百粒挑一#34804","菊花散一桌#23515"],1],["11-22 22:07:14",1,15.2,["庭中三千梨花树#38028","小薇来信#23949","糖炒苏沫沫#68583","不将就#34291","蓝风铃#94187"],["华浅儿#77827","vraal#50939","小刘可有可无#14489","一枪一个队友#74987","一条快乐瓜皮#59397"],1],["11-22 22:21:17",1,31.2,["星辰勇士胜利#81537","T1丨BUG#0520","Serein#20205","花仙兽开花#5555","圆圆居#80711"],["魔力卷卷#26416","命定之死#71129","麦兜爱吃猪大肠#13917","唯有相思难熬#80185","兄弟买脚本吗#27170"],1],["11-22 22:32:54",1,25.2,["不吃蛋糕小笨蛋#75538","一条快乐瓜皮#59397","小刘可有可无#14489","蓝风铃#94187","糖炒苏沫沫#68583"],["小薇来信#23949","一枪一个队友#74987","vraal#50939","庭中三千梨花树#38028","不将就#34291"],1],["11-22 23:09:01",1,16.1,["T1丨BUG#0520","魔力卷卷#26416","命定之死#71129","南京土菜主#37922","星辰勇士胜利#81537"],["唯有相思难熬#80185","花仙兽开花#5555","Serein#20205","圆圆居#80711","兄弟买脚本吗#27170"],1],["11-22 23:13:49",0,24.9,["困了鱼#56417","我等打野你在等啥#82687","一条快乐瓜皮#59397","小薇来信#23949","糖炒苏沫沫#68583"],["缘为冰#46082","不吃蛋糕小笨蛋#75538","小刘可有可无#14489","一枪一个队友#74987","不将就#34291"],1],["11-23 18:54:34",0,32.6,["ovo#45056","T1丨BUG#0520","不吃蛋糕小笨蛋#75538","樱桃小丸犊子丶#80836","名字有什么好取的#47216"],["Serein#20205","怎么会舍得放弃i#45111","云何渐渐如钩#76862","小鳥遊六花#14620","圆圆居#80711"],1],["11-23 19:20:16",1,38,["一条快乐瓜皮#59397","愿你爱我岁岁年年#28949","命定之死#71129","王奕萌#27168","糖炒苏沫沫#68583"],["惹残香#86440","糖炒黑子萌萌哒#79584","几分丧#35130","小鹿乱撞1th#16741","不将就#34291"],1],["11-23 19:40:16",0,20.8,["T1丨BUG#0520","不吃蛋糕小笨蛋#75538","名字有什么好取的#47216","ovo#45056","樱桃小丸犊子丶#80836"],["小鳥遊六花#14620","怎么会舍得放弃i#45111","圆圆居#80711","云何渐渐如钩#76862","Serein#20205"],1],["11-23 20:07:30",1,25.9,["不吃蛋糕小笨蛋#75538","T1丨BUG#0520","名字有什么好取的#47216","圆圆居#80711","云何渐渐如钩#76862"],["Serein#20205","怎么会舍得放弃i#45111","樱桃小丸犊子丶#80836","ovo#45056","小鳥遊六花#14620"],1],["11-23 20:08:35",1,29.4,["摆烂就学刚子哥#34323","王奕萌#27168","不将就#34291","几分丧#35130","小鹿乱撞1th#16741"],["听风讲她的故事#37523","糖炒苏沫沫#68583","糖炒黑子萌萌哒#79584","命定之死#71129","小刘可有可无#14489"],1],["11-23 20:40:22",1,25.8,["不吃蛋糕小笨蛋#75538","怎么会舍得放弃i#45111","圆圆居#80711","云何渐渐如钩#76862","小鳥遊六花#14620"],["樱桃小丸犊子丶#80836","Serein#20205","T1丨BUG#0520","ovo#45056","名字有什么好取的#47216"],1],["11-23 20:46:56",0,22.6,["小薇来信#23949","听风讲她的故事#37523","命定之死#71129","小刘可有可无#14489","糖炒苏沫沫#68583"],["小鹿乱撞1th#16741","几分丧#35130","你让我感到开心#88572","不将就#34291","vae#78484"],1],["11-23 21:09:11",1,32.9,["可爱小酒#73580","uuu#0520","焦泥座人金克斯#71580","她是希冀#78666","鸡蛋汉堡#25809"],["贪吃乌云#50063","麦兜爱吃猪大肠#13917","花仙兽开花#5555","愿你爱我岁岁年年#28949","陆雪琪#45231"],1],["11-23 21:13:13",1,26.1,["魔力卷卷#26416","小鳥遊六花#14620","名字有什么好取的#47216","怎么会舍得放弃i#45111","T1丨BUG#0520"],["不吃蛋糕小笨蛋#75538","ovo#45056","圆圆居#80711","云何渐渐如钩#76862","樱桃小丸犊子丶#80836"],1],["11-23 21:21:17",0,24.1,["糖炒苏沫沫#68583","小刘可有可无#14489","vae#78484","不将就#34291","小鹿乱撞1th#16741"],["听风讲她的故事#37523","你让我感到开心#88572","小薇来信#23949","命定之死#71129","几分丧#35130"],1],["11-23 21:54:29",1,30.2,["不吃蛋糕小笨蛋#75538","圆圆居#80711","T1丨BUG#0520","甜心奶糖酱丶#97558","怎么会舍得放弃i#45111"],["小鳥遊六花#14620","困了鱼#56417","魔力卷卷#26416","名字有什么好取的#47216","云何渐渐如钩#76862"],1],["11-23 21:56:19",0,35.2,["焦泥座人金克斯#71580","愿你爱我岁岁年年#28949","麦兜爱吃猪大肠#13917","漫天星#11691","uuu#0520"],["鸡蛋汉堡#25809","贪吃乌云#50063","可爱小酒#73580","她是希冀#78666","花仙兽开花#5555"],1],["11-23 21:59:56",1,15.2,["不将就#34291","小鹿乱撞1th#16741","惹残香#86440","小刘可有可无#14489","听风讲她的故事#37523"],["几分丧#35130","你让我感到开心#88572","vae#78484","小薇来信#23949","糖炒苏沫沫#68583"],1],["11-23 22:21:33",1,39.4,["惹残香#86440","听风讲她的故事#37523","vae#78484","小薇来信#23949","小刘可有可无#14489"],["你让我感到开心#88572","小鹿乱撞1th#16741","几分丧#35130","不将就#34291","糖炒苏沫沫#68583"],1],["11-23 22:33:42",0,39.1,["小鳥遊六花#14620","T1丨BUG#0520","困了鱼#56417","圆圆居#80711","甜心奶糖酱丶#97558"],["怎么会舍得放弃i#45111","不吃蛋糕小笨蛋#75538","云何渐渐如钩#76862","魔力卷卷#26416","名字有什么好取的#47216"],1],["11-23 22:42:10",1,30.4,["愿你爱我岁岁年年#28949","她是希冀#78666","鸡蛋汉堡#25809","贪吃乌云#50063","花仙兽开花#5555"],["漫天星#11691","焦泥座人金克斯#71580","麦兜爱吃猪大肠#13917","可爱小酒#73580","uuu#0520"],1],["11-23 23:11:07",1,19.3,["听风讲她的故事#37523","我狸正在摇香菇#50676","几分丧#35130","不将就#34291","小鹿乱撞1th#16741"],["小刘可有可无#14489","糖炒苏沫沫#68583","你让我感到开心#88572","小薇来信#23949","vae#78484"],1],["11-23 23:20:20",0,32.8,["困了鱼#56417","小鳥遊六花#14620","圆圆居#80711","甜心奶糖酱丶#97558","不吃蛋糕小笨蛋#75538"],["T1丨BUG#0520","名字有什么好取的#47216","怎么会舍得放弃i#45111","魔力卷卷#26416","云何渐渐如钩#76862"],1]],"players":[{"n":"兄弟买脚本吗#27170","m":[[0,1,8,0,1,13.7,9100,14700,60,48,1],[1,0,14,6,9,11.9,18400,58600,82,47,1],[30,1,16,1,6,13.6,13900,34800,65,32,0],[40,0,6,7,16,7.4,13300,30700,69,28,0],[42,0,1,6,0,6.4,5600,8900,14,27,0]]},{"n":"WangAlong#47662","m":[[0,1,2,0,2,8.4,7000,5400,27,18,0],[1,0,3,11,8,4.5,13400,24800,39,20,0],[4,0,6,8,4,6.8,13000,20100,45,19,0],[5,1,6,11,9,7.5,12400,20700,31,14,0],[30,0,4,6,5,10.2,10800,28300,64,35,2],[32,1,9,2,3,10.2,9800,18700,35,28,0],[34,0,7,6,2,8.2,12300,21200,38,25,0]]},{"n":"DeAnima#65439","m":[[0,1,0,1,6,6.5,4500,2500,40,8,0],[1,1,3,4,20,8.3,10800,8700,53,7,0]]},{"n":"麦兜爱吃猪大肠#13917","m":[[0,1,1,1,3,6.4,6000,2500,27,8,0],[1,0,9,9,7,6.4,12800,18800,57,15,0],[4,1,5,4,18,11.5,12600,18100,66,19,0],[5,1,7,3,28,14.7,15600,24000,73,16,1],[7,1,8,9,12,5.2,13600,23900,38,14,0],[30,0,4,10,2,4.1,9200,13000,43,16,0],[35,1,6,5,24,9,13900,24700,65,15,0],[40,0,6,9,13,5.3,12000,15800,59,14,0],[51,0,11,5,8,11.7,14700,21700,63,23,2],[55,1,10,4,20,11.2,15100,30600,67,17,0],[59,0,2,6,3,5.8,10800,11600,33,12,0]]},{"n":"百粒挑一#34804","m":[[0,1,4,1,1,8,6600,5500,33,18,0],[1,1,12,11,7,10.9,18900,46300,44,35,0],[36,0,4,8,1,9.1,9800,14300,42,28,0],[38,0,12,13,7,10.7,18300,32900,61,28,2]]},{"n":"秦生十月#76063","m":[[0,0,0,4,0,5.4,5600,1500,0,9,0],[1,1,19,6,5,11.2,16400,35700,56,27,0]]},{"n":"花仙兽开花#5555","m":[[0,0,1,4,1,6.1,5400,8200,67,48,0],[1,1,4,5,13,10,15100,25000,40,19,0],[4,0,8,5,8,10.1,11000,33600,73,31,0],[5,0,3,11,9,5.2,10300,13000,39,9,0],[7,0,7,6,12,7.1,13400,16200,51,12,0],[9,0,0,8,14,3,7100,4500,61,5,0],[10,0,1,9,12,5,7600,13600,62,19,0],[18,1,2,1,11,10,7000,10400,48,12,0],[22,0,6,15,10,4.2,12100,26300,59,22,0],[26,1,17,4,9,14.2,16800,49800,60,36,1],[29,0,8,5,15,8.2,14500,65800,55,29,0],[31,0,8,10,5,4.6,15400,32200,42,27,0],[33,1,10,0,6,14.2,9800,20100,64,38,1],[35,1,18,5,16,13,18500,57300,74,34,1],[40,1,5,4,24,9,11600,44400,74,29,0],[42,0,0,3,2,7.5,5000,7900,29,24,0],[51,0,3,11,11,7.2,12400,28800,47,30,0],[55,0,5,7,7,7.7,14300,38500,41,31,0],[59,1,9,1,18,11.3,12200,30700,60,22,0]]},{"n":"薇薇简#73460","m":[[0,0,1,2,0,5.6,3800,1600,33,9,0],[1,0,0,10,11,3,8100,7700,39,6,0]]},{"n":"回首往事展望未来#38126","m":[[0,0,0,1,1,9.1,5800,3300,33,19,2],[1,1,5,2,8,9.9,13100,17600,30,13,0],[13,0,8,8,15,9.1,15600,33600,43,17,0],[17,0,2,3,22,7.8,9100,5500,71,5,0],[21,1,3,19,21,4.1,11600,17100,44,7,0],[25,0,2,9,6,3,6700,15100,62,24,0]]},{"n":"梁钲朋#65402","m":[[0,0,1,4,1,5.1,4900,2400,67,14,0],[1,0,2,7,4,6.3,10900,13800,21,11,0],[33,1,4,1,2,7.7,7400,2700,24,5,0],[35,1,3,10,13,3.5,11500,17100,35,10,0]]},{"n":"vae#78484","m":[[2,1,3,5,12,6,7700,11700,52,15,0],[3,0,6,7,2,7.5,12200,22300,40,31,2],[50,0,2,5,5,4.5,10200,7600,39,14,0],[53,1,4,5,22,5.5,10100,26600,48,21,0],[56,0,3,6,0,5,5000,7100,50,25,0],[57,1,15,14,8,6.1,13700,30100,37,16,0],[60,0,4,4,4,7.9,7400,12800,62,29,0]]},{"n":"vraal#50939","m":[[2,1,3,2,18,9.4,8100,9300,72,12,0],[3,1,5,4,21,10.6,9800,8900,67,9,0],[18,0,1,4,2,7.4,6000,8700,27,16,0],[22,1,4,4,32,7,12100,10700,68,8,0],[26,1,1,2,24,9.3,10700,8800,58,6,0],[30,1,0,1,15,9.9,7300,6000,44,6,0],[32,1,2,3,19,7,7200,4400,62,7,0],[34,1,4,1,22,10.7,10300,8100,74,8,0],[37,0,1,6,18,7.1,10600,17600,43,12,0],[39,0,2,4,4,8.1,5000,4900,67,13,0],[41,0,2,8,10,3.4,7200,12900,67,12,0]]},{"n":"华浅儿#77827","m":[[2,1,4,2,12,11.1,11600,22700,55,28,0],[19,1,9,3,5,13.8,15800,29400,45,25,1],[23,1,4,3,7,6.8,9800,8800,35,11,0],[37,0,4,6,13,9,12600,21700,39,15,0],[39,0,0,9,3,3.9,3900,4300,33,12,0]]},{"n":"ChengZhi#68506","m":[[2,1,3,6,13,6.2,9100,11900,55,15,0],[3,0,2,7,1,5.5,9300,17500,15,24,0]]},{"n":"满怀发烧情#38682","m":[[2,1,16,5,5,12.7,15100,24900,72,31,1],[3,1,3,7,17,6.8,12500,24500,51,23,0]]},{"n":"一口甜#80388","m":[[2,0,4,7,3,6.3,9600,19100,35,28,0],[3,0,4,9,2,3.2,8600,16000,30,22,0]]},{"n":"鸡蛋汉堡#25809","m":[[2,0,0,6,3,3.8,8300,14800,15,22,0],[29,0,12,8,14,11.2,19500,78700,62,35,2],[31,0,10,5,10,8.4,15200,33600,65,28,2],[33,1,5,1,0,6.9,6700,11500,20,22,0],[35,0,8,7,4,7.1,14400,25400,33,24,2],[51,1,16,2,7,15.3,18300,28400,57,28,1],[55,0,8,10,5,7.6,15000,30700,45,25,0],[59,1,12,2,23,15.1,18000,40700,78,29,1]]},{"n":"快哄哄#75763","m":[[2,0,0,6,4,3,5700,2400,20,3,0]]},{"n":"声悠悠#64339","m":[[2,0,1,3,5,7.5,9800,5200,30,8,0],[3,1,17,2,7,14.8,16900,31000,62,30,1],[6,0,6,7,8,8.3,12100,14400,70,24,2],[8,1,16,8,7,13.4,17500,30400,55,28,1],[9,0,5,8,7,5.7,11400,16300,52,17,0],[10,0,2,10,3,3.8,8700,8000,24,11,0],[11,0,3,5,4,9.1,7000,5800,58,16,2],[12,1,16,8,11,12.4,19700,39200,47,22,0],[13,0,13,10,12,10.1,19700,49500,47,25,2],[16,1,11,1,4,12,14100,25800,35,21,0],[20,0,12,5,11,12.9,15600,31500,56,23,2],[24,0,6,7,1,7.6,12200,14700,35,15,0],[27,0,0,8,6,3.7,11200,13800,18,14,0],[36,0,2,4,1,8.4,9200,3500,25,7,0],[38,0,4,8,2,5.3,11000,13300,19,11,0]]},{"n":"中二患者远离我#46006","m":[[2,0,15,7,1,9.1,12300,27300,80,40,2],[36,1,5,4,9,9.6,10700,10800,44,13,0],[38,0,1,11,3,4.5,9500,18100,13,15,0]]},{"n":"命定之死#71129","m":[[3,1,9,3,4,8.3,11600,21200,33,20,0],[6,0,4,7,0,5.2,8300,15800,20,26,0],[8,1,3,10,10,7.3,9200,14100,31,13,0],[9,1,3,3,9,6.3,9300,19100,33,14,0],[10,0,4,11,4,4.1,7900,13700,38,20,0],[11,0,0,5,0,4.9,4100,6900,0,19,0],[17,1,5,12,12,5.8,9600,15500,45,16,0],[21,0,10,8,13,8.5,16700,35000,38,15,0],[25,1,4,3,8,8.7,10000,18400,33,19,0],[29,1,10,5,9,11.6,17300,42200,51,28,1],[31,1,4,5,10,5.9,12200,21000,33,13,0],[33,0,1,5,0,5.2,5100,8200,17,27,0],[35,0,9,11,9,6.4,14900,23400,50,22,0],[40,0,5,10,9,3.9,12000,17300,44,16,0],[42,1,2,3,5,7.5,6200,7800,28,18,0],[45,1,3,6,19,8.6,13100,20000,49,12,0],[48,0,2,8,6,5.6,8900,15800,33,16,0],[50,1,7,5,1,5.8,9700,19200,26,22,0],[53,0,4,10,4,4,8500,18700,33,22,0]]},{"n":"是小林呀#80660","m":[[3,1,5,5,8,7.7,10400,19000,33,18,0]]},{"n":"本螂姓螳不姓蟑#93528","m":[[3,0,1,8,8,3,6800,6600,45,9,0]]},{"n":"听风讲她的故事#37523","m":[[3,0,7,8,0,5.1,9700,10200,35,14,0],[6,0,1,10,3,3,8200,6400,20,11,0],[8,0,13,6,5,10.4,14400,17700,39,16,0],[9,1,3,7,9,3.8,10800,9900,33,7,0],[10,1,16,3,8,14.1,15500,26200,52,27,1],[11,1,10,1,5,16.5,9600,9600,54,22,1],[12,0,10,15,19,8.6,16100,33500,69,20,0],[13,1,13,16,7,8.1,18100,28400,43,14,0],[19,0,7,7,6,9.2,12100,17700,54,23,0],[23,0,5,7,4,4.6,9500,10000,60,18,2],[29,0,20,9,5,9.5,18400,45800,60,20,0],[31,1,29,7,6,13.3,22300,71300,81,45,1],[33,0,0,6,4,5.2,5200,6200,67,21,0],[34,0,12,7,8,11.6,14400,25600,83,30,2],[48,0,4,8,5,7.3,11400,16500,38,17,0],[50,1,7,4,4,6.8,10800,10100,35,11,0],[53,0,3,10,10,3.5,8700,11900,54,14,0],[56,1,6,0,1,10.7,6800,7000,29,16,0],[57,1,14,10,6,8,18000,32500,32,17,0],[60,1,7,1,7,11.8,9600,11300,44,16,0]]},{"n":"贪吃乌云#50063","m":[[4,1,15,5,5,12.7,17800,24800,57,26,1],[5,1,13,7,9,11.9,19000,34100,46,23,0],[30,1,9,3,8,12.3,14700,20200,50,19,0],[32,0,8,6,1,8.1,10400,10500,69,21,2],[51,0,13,7,7,11.5,18600,25700,67,27,0],[55,0,4,8,8,6.8,15100,25300,41,20,0],[59,1,5,7,11,6.5,13200,24500,36,18,0]]},{"n":"小鳥遊六花#14620","m":[[4,1,7,7,5,7.9,11100,23100,34,24,0],[5,0,6,11,11,7.8,13600,23800,55,16,0],[7,1,21,8,13,12.3,23800,75000,65,45,1],[9,0,6,9,7,4.7,12000,17600,57,18,0],[10,1,10,3,3,9.9,12200,20900,28,21,0],[11,1,2,3,3,8.7,7100,4100,18,9,0],[22,1,4,4,4,5,11300,14100,15,10,0],[26,1,6,8,11,9.7,17300,32700,40,24,0],[28,1,16,10,5,11.5,14900,36100,64,30,1],[44,0,6,6,5,12.7,19100,28200,52,34,1],[46,0,1,7,3,5.4,8000,11600,40,23,0],[47,0,3,7,2,8.3,10300,20600,38,30,0],[49,1,14,6,5,9.9,15000,34700,53,34,0],[52,1,12,3,8,13.3,15300,29700,49,27,0],[54,0,6,6,7,10.6,17000,20700,54,24,2],[58,1,9,8,11,12.1,21900,42000,53,28,1],[61,1,11,3,9,12,17800,35200,49,26,0]]},{"n":"愿你爱我岁岁年年#28949","m":[[4,1,1,4,25,8.9,9200,8900,74,9,0],[5,1,8,8,25,10.9,13600,28700,69,20,0],[19,0,3,7,14,6.5,8200,10100,71,13,0],[23,0,3,6,6,3.5,7600,7700,60,14,0],[36,1,4,1,19,10.6,8900,11600,72,14,0],[45,1,12,6,19,12.3,17100,51100,69,30,0],[51,0,3,9,24,7.4,10400,11700,90,12,0],[55,1,11,4,9,10.1,16900,35600,44,20,0],[59,1,12,2,7,14.2,17000,33000,42,24,0]]},{"n":"树中叶#85270","m":[[4,1,7,2,10,12.1,11900,21000,49,22,0],[5,0,10,11,8,8.7,12800,39700,58,26,0],[7,1,14,9,9,5.4,14700,37100,44,22,0]]},{"n":"魔力卷卷#26416","m":[[4,0,2,10,11,4.2,8000,10300,59,10,0],[5,0,1,7,6,5.5,8700,22900,23,15,0],[7,1,1,5,36,6.3,12400,7900,71,5,0],[16,1,1,4,24,6.4,8800,8100,58,7,0],[20,0,4,15,11,5,9100,14100,37,10,0],[24,1,1,7,18,5.3,8400,6000,45,6,0],[27,1,2,4,30,6,11300,9300,74,7,0],[28,0,2,5,26,9.1,10000,9100,65,8,0],[29,1,1,11,9,3,10600,18300,27,12,0],[31,0,1,10,10,3,8900,10800,35,9,0],[33,1,0,2,4,3.1,4300,4100,16,8,0],[35,0,2,10,16,3,9400,8500,50,8,0],[40,0,4,8,14,4.4,10300,12400,56,11,0],[42,1,3,3,9,7.2,5500,5700,48,13,0],[52,1,0,6,12,3.9,7500,2800,29,3,0],[54,0,3,6,10,6.4,8800,9200,54,11,0],[58,0,2,6,24,7.4,12700,6300,60,4,0],[61,0,3,8,8,5,9200,9100,38,8,0]]},{"n":"不存在的麻衣学姐#22496","m":[[4,0,2,8,8,6.9,10500,20500,45,19,0],[5,1,14,2,9,13.9,15700,38000,48,26,0],[7,1,8,6,8,7.2,14300,22400,31,13,0]]},{"n":"T1丨BUG#0520","m":[[4,0,4,4,8,11,12100,22200,55,21,2],[5,0,11,8,6,11.4,16500,50500,55,34,2],[7,0,4,11,10,8,16200,35200,38,26,2],[16,1,15,3,15,14.6,17400,39700,70,33,1],[20,1,17,9,9,11.1,17500,28900,54,21,0],[24,0,8,7,5,10.7,13700,31600,65,33,2],[27,1,29,6,3,13,27200,72800,74,51,1],[28,0,20,7,4,10.9,16500,32900,56,30,2],[29,1,14,10,8,9.5,22000,43800,59,29,0],[31,0,8,10,8,5.3,15700,21000,52,18,0],[33,1,6,2,6,8.5,8700,14900,48,28,0],[35,1,18,6,16,12.9,21600,59500,74,35,0],[40,1,20,7,6,12.1,20200,50500,67,33,1],[42,1,7,1,8,13.8,9800,12800,60,29,1],[44,1,5,4,9,9.8,14400,19400,39,18,0],[46,1,9,1,6,12.2,13600,14800,50,19,1],[47,1,12,4,7,12.2,14100,27400,59,34,0],[49,0,4,5,7,7.7,11700,14800,58,22,2],[52,1,10,4,18,13.1,14100,22600,68,20,0],[54,1,12,6,5,11.9,16500,33800,49,27,0],[58,1,7,11,15,9.6,20300,37300,58,25,0],[61,0,4,6,3,7.4,13300,27300,24,23,0]]},{"n":"古德咪咪妮#95284","m":[[6,1,0,1,29,8.6,8800,4900,71,7,0],[8,0,1,7,22,6.3,8400,9200,50,8,0],[9,1,0,1,31,7.2,9600,13000,86,9,0],[10,1,2,4,17,6,8600,4800,41,5,0],[11,0,3,4,5,7.4,5100,4600,67,13,0],[12,0,3,12,21,6.2,10200,19700,57,12,0],[13,1,0,11,32,6.1,12000,9800,68,5,0],[19,1,0,7,17,3.9,8200,4600,55,4,0],[23,1,2,2,21,6.5,7800,7800,74,10,0],[30,0,0,7,4,3.6,6100,5400,29,7,0],[32,0,0,7,9,3.3,5100,5100,69,10,0],[34,0,1,5,14,5.2,7500,8300,62,10,0]]},{"n":"小薯咪#44539","m":[[6,1,19,3,7,14.5,16700,31300,63,42,1],[8,0,12,7,6,11.9,13500,31600,39,29,2],[9,1,20,7,11,11.7,19900,76800,86,55,1],[10,1,10,5,8,10.4,13800,28000,39,29,0],[11,0,5,6,3,9,6700,13300,67,37,0],[12,1,3,9,29,8.4,12900,15000,56,8,0],[13,1,15,9,11,13.4,24800,64099,55,31,1],[19,1,6,7,9,9.1,13600,32900,48,28,0],[23,1,15,2,8,14.7,16600,29400,74,37,1],[32,0,2,9,6,5.6,8500,14600,62,29,0],[34,0,3,11,5,5.8,12200,18800,33,22,0]]},{"n":"小牛TAdie#24733","m":[[6,1,8,5,4,7.7,11300,18400,29,25,0],[8,1,5,14,14,6.3,12500,14200,45,13,0]]},{"n":"红心A#16819","m":[[6,1,1,5,4,3.2,7100,4100,12,6,0],[8,0,9,9,8,10.3,12500,23500,37,22,0],[9,0,8,6,3,6.6,10200,23000,48,24,0],[10,0,8,8,2,8,12300,15100,48,22,2],[11,0,1,8,2,4.4,4900,5700,25,16,0],[12,0,5,13,18,9.3,15600,31000,55,18,0],[13,0,5,10,19,5.5,13200,21900,45,11,0],[19,0,2,6,4,6.4,9200,11300,25,14,0],[23,0,3,6,3,3.1,7900,12800,40,23,0]]},{"n":"素衣若雪#21790","m":[[6,1,13,6,9,7,12200,15400,54,21,0],[8,0,11,13,11,7.6,12100,26400,48,24,0]]},{"n":"惹残香#86440","m":[[6,0,4,11,7,3.6,7400,9400,55,16,0],[8,1,5,5,20,9.7,11000,24100,60,22,0],[9,0,4,5,8,7.8,10200,35400,52,37,2],[18,1,2,1,3,14.1,10800,27300,19,33,0],[22,0,3,7,1,5.3,11600,22000,15,19,0],[26,0,7,6,3,9.9,12800,26900,43,28,0],[36,0,4,9,0,6.9,8400,15200,33,30,0],[38,1,6,5,18,8.1,10700,19100,49,12,0],[45,0,10,9,0,12.4,20300,42700,29,31,0],[56,1,5,2,1,9,6100,10600,25,24,0],[57,1,13,8,12,11.1,17800,42600,40,23,0]]},{"n":"别来无恙#50566","m":[[6,0,5,6,4,6.6,9400,13900,45,23,0],[8,1,13,10,10,10.7,14400,26500,55,24,0],[9,1,10,5,0,4.9,11300,21100,28,15,0],[10,1,8,6,13,8.3,10800,18100,46,18,0],[11,1,8,2,5,14.8,9900,12900,46,29,0],[12,1,10,12,14,8.1,14000,30500,42,17,0],[13,0,20,10,12,9.5,19100,56100,60,28,0],[38,0,11,10,8,8.9,15100,36600,61,31,0]]},{"n":"Serein#20205","m":[[7,0,15,11,7,7.9,17200,35200,59,26,0],[14,0,3,7,0,5.6,5500,6000,43,20,0],[15,1,22,19,12,10,26200,61400,49,25,0],[19,0,3,9,6,5.4,10200,15400,38,20,0],[23,0,2,7,5,3.6,8200,19900,47,35,0],[32,0,1,9,2,3,5300,7700,23,15,0],[35,0,9,9,3,7,15200,23200,33,22,0],[40,1,7,8,13,6.2,14100,28000,51,18,0],[42,0,4,4,2,10.1,7800,6000,86,18,2],[44,0,4,10,2,4.8,12100,15700,29,19,0],[46,0,6,3,1,11,9800,18500,70,37,2],[47,0,4,4,1,9.1,10900,13600,38,20,2],[49,0,6,9,1,4.8,10000,11800,37,18,0]]},{"n":"不将就#34291","m":[[7,0,8,9,9,7.4,14600,27400,46,20,0],[17,0,4,9,5,7.1,10300,29000,26,25,0],[21,0,7,8,36,8.6,15100,45300,70,19,0],[25,1,6,3,13,9.3,10700,22700,53,23,0],[37,1,14,7,8,11.4,19300,60400,48,32,0],[39,1,7,0,4,10.7,6900,7200,42,17,0],[41,0,3,8,5,4.4,9500,22300,44,21,0],[43,0,4,9,16,7.2,8300,20400,61,23,0],[45,0,9,6,8,13.4,18300,31500,50,23,1],[48,1,6,6,18,8.4,12500,37800,51,23,0],[50,0,5,6,7,5.8,9200,11500,67,22,0],[53,1,1,5,30,6.2,8900,10500,57,8,0],[56,1,2,3,10,6.8,5100,6000,50,14,0],[57,0,1,14,28,8.1,12100,13100,57,7,0],[60,1,1,1,16,8.2,6400,8500,53,12,0]]},{"n":"风会代替我吧#20551","m":[[7,0,3,15,10,5.2,12000,20000,35,15,0],[14,0,2,5,2,8.6,6200,6500,57,22,2],[15,1,25,12,14,12.8,25300,73300,57,29,0],[17,0,8,11,5,7.8,12100,27700,38,24,0],[21,0,18,15,11,6.9,16100,51000,48,22,0],[25,1,2,4,20,6.8,8200,8500,61,9,0]]},{"n":"许缘心#74756","m":[[10,0,6,8,6,7.2,10700,19700,57,28,0]]},{"n":"Mochi#17985","m":[[11,1,4,5,6,7.4,6000,6100,36,14,0],[12,0,19,8,4,13.1,18600,45000,55,27,2],[13,1,11,11,20,11.1,18100,60000,66,29,0]]},{"n":"羽落秋去#54613","m":[[11,1,4,1,1,12.6,7200,11100,18,25,0],[12,1,17,5,14,14.4,17400,50700,54,28,1]]},{"n":"小红书飞科#49536","m":[[12,1,11,8,19,10.9,18500,46400,53,26,0],[13,0,7,9,13,7.9,16500,36100,38,18,0]]},{"n":"Zeus#88894","m":[[12,0,5,9,9,9.3,13700,38600,33,23,0],[13,1,8,6,16,11.4,15900,43500,51,21,0],[17,1,7,2,6,13.2,16100,12900,34,13,0],[21,1,1,10,14,7.1,15000,33700,27,14,0],[25,0,1,8,3,5,9800,7800,31,13,0]]},{"n":"樱桃小丸犊子丶#80836","m":[[14,1,8,3,1,9.4,8800,12800,31,24,0],[15,1,18,9,25,15.4,25900,80800,62,32,1],[18,1,8,2,10,14.6,11000,20900,67,25,1],[22,0,8,8,7,7.5,16500,20200,56,17,2],[44,1,3,1,13,8.3,10000,11400,44,10,0],[46,1,4,0,11,8,7600,7600,50,10,0],[47,0,2,5,1,5.6,7700,12200,23,18,0],[49,0,1,8,9,3.3,6900,7300,53,11,0],[52,0,3,8,4,5.7,8300,22300,39,28,0]]},{"n":"柑橘乌云#71166","m":[[14,1,9,1,5,15.2,8900,9700,48,18,1],[15,0,3,16,12,7.2,19500,38100,24,14,0]]},{"n":"小学生坑大神啦#17192","m":[[14,1,3,1,1,11.7,6600,10900,14,20,0],[15,0,4,12,16,6.9,15300,40100,32,15,0]]},{"n":"七旬白袜黑皮老头#29031","m":[[14,1,1,1,9,8.9,5100,7000,34,13,0],[15,1,0,14,33,6,13700,10400,48,4,0]]},{"n":"名字有什么好取的#47216","m":[[14,1,8,1,5,14.7,8800,13000,45,24,0],[15,0,20,14,5,9.7,23100,55200,40,20,0],[44,1,8,8,14,9.6,13600,29100,61,27,0],[46,1,8,3,9,9.5,8300,22200,57,29,0],[47,1,7,4,3,8.8,12600,14800,31,18,0],[49,0,4,7,3,4.9,10000,15000,37,22,0],[52,1,10,3,12,14.3,13100,29800,54,27,1],[54,0,9,7,4,9.2,13700,26200,54,31,0],[58,0,12,5,10,12.1,18200,47900,51,34,2],[61,0,11,9,7,10.8,15400,37100,62,31,2]]},{"n":"theshy#80228","m":[[14,0,0,3,1,6.7,3800,6300,14,21,0],[15,1,4,8,10,7.1,15500,23300,20,9,0]]},{"n":"晚香玉#12334","m":[[14,0,0,6,3,4.7,4200,3600,43,12,0],[15,0,18,10,19,11.8,20500,62700,60,23,2]]},{"n":"七里香#34378","m":[[14,0,2,8,0,5.1,5100,7200,29,24,0],[15,0,17,17,14,9.7,23100,74700,50,28,0]]},{"n":"怎么会舍得放弃i#45111","m":[[16,1,14,6,7,8.6,12200,29800,49,25,0],[20,1,15,5,17,14.6,15400,42900,67,31,1],[24,1,15,2,7,13.1,13300,28500,52,28,0],[27,1,4,12,20,3,12800,15000,56,11,0],[28,1,3,5,5,8,9800,19300,24,16,0],[29,0,2,9,13,3.6,10200,24400,36,11,0],[31,1,8,5,16,8.4,14500,36300,56,23,0],[33,0,2,5,2,4.3,6100,4800,67,16,0],[35,0,8,9,7,6.6,13400,26800,42,25,0],[44,0,4,7,10,8.9,12600,24300,67,29,0],[46,0,0,10,4,3.6,6100,8800,40,18,0],[47,0,1,9,3,3.3,6700,6800,31,10,0],[49,1,1,3,9,5.2,7700,12600,28,12,0],[52,1,9,2,13,13.4,11600,25800,54,23,0],[54,1,5,3,12,12.8,12800,24100,49,19,0],[58,0,0,9,16,4.7,10600,17500,37,12,0],[61,0,5,10,12,7,13400,29500,59,25,0]]},{"n":"atgr1584#14177","m":[[16,1,2,4,11,7.4,10800,16900,30,14,0],[20,1,8,8,11,8.1,12200,29700,40,21,0],[24,1,2,2,16,8.9,8900,12100,43,12,0],[27,1,4,8,7,4.7,10900,22800,26,16,0],[28,0,5,5,12,9,11300,19500,40,18,0],[29,1,6,7,10,6.4,14300,14500,43,9,0],[31,0,4,8,8,4.8,11900,20600,39,17,0]]},{"n":"圆圆居#80711","m":[[16,0,0,9,9,4.5,7000,7100,50,8,0],[20,1,1,10,22,4.8,9600,11800,48,8,0],[24,0,3,9,10,5.9,9200,14800,65,16,0],[27,0,1,10,14,3,8900,2900,44,3,0],[28,1,0,8,18,6,8400,5600,55,5,0],[29,0,0,6,30,5.7,10600,11400,71,5,0],[31,1,0,8,20,3,9000,6100,47,4,0],[33,0,1,5,2,3.8,4300,2800,50,9,0],[35,1,1,10,33,3.7,10500,9600,74,6,0],[40,1,0,7,27,4.5,9400,6300,69,4,0],[42,0,0,6,4,4.2,4200,3300,57,10,0],[44,0,2,7,9,5.4,10100,5500,52,7,0],[46,0,3,5,2,5.6,6700,6000,50,12,0],[47,1,0,3,20,6.6,7900,5000,62,6,0],[49,1,1,6,21,6.3,8500,3600,61,4,0],[52,0,0,7,11,5.3,6900,7600,61,9,0],[54,1,0,5,22,7.8,10000,6700,63,5,0],[58,1,0,9,20,4.7,10800,4400,53,3,0],[61,1,0,4,19,6.5,9200,3400,46,2,0]]},{"n":"MMZ#16948","m":[[16,0,4,4,5,8.9,11400,22800,50,26,2],[20,0,10,9,0,9.3,13600,24600,24,18,0],[24,1,7,5,10,9.6,13000,25100,40,25,0],[27,1,4,4,5,5.8,11300,22600,21,16,0]]},{"n":"贪睡小猫#23708","m":[[16,0,4,12,4,5,11400,19800,44,23,0],[20,1,7,9,10,8.8,12800,26600,35,19,0],[24,0,3,8,3,6.1,10300,23600,30,25,0]]},{"n":"一个养蝉的男人#72382","m":[[16,0,6,9,5,8.9,13800,15000,61,17,0],[20,0,8,9,8,10,13400,27200,39,20,0],[24,1,17,4,6,13.9,17300,28500,55,28,1],[27,0,16,8,5,7.4,17100,31700,62,32,2],[28,1,6,7,8,8.9,12900,20900,42,18,0]]},{"n":"Off#86458","m":[[16,0,4,9,7,5.8,9500,21500,61,25,0],[20,0,7,10,8,9.3,13000,36900,37,27,0],[24,0,0,11,1,3,7300,10700,5,11,0],[27,0,10,8,7,5.7,13800,29200,50,29,0],[28,0,6,7,8,6.9,10400,23400,33,21,0]]},{"n":"小鹿乱撞1th#16741","m":[[17,1,11,5,14,13.2,13400,28800,66,30,1],[21,1,17,10,18,11.3,20000,65800,64,26,0],[25,0,3,5,2,7.2,9400,13000,38,21,0],[45,0,5,14,3,5.6,13800,18900,24,14,0],[48,1,17,4,12,13.1,15800,28200,62,17,1],[50,0,1,5,11,5,6500,4000,67,8,0],[53,1,9,3,7,6.8,11600,18400,30,14,0],[56,1,7,1,2,10.7,7100,9800,38,23,0],[57,0,17,6,19,14,19600,54000,71,31,1],[60,1,6,3,7,9.7,7700,16800,41,24,0]]},{"n":"焦泥座人金克斯#71580","m":[[17,1,5,7,12,11.3,15300,15000,45,16,0],[21,1,21,8,17,13.6,25400,95100,69,38,1],[25,0,1,8,2,3,9000,9100,23,15,0],[51,1,11,7,13,12.3,15500,29100,60,29,0],[55,1,1,8,23,4.3,10800,25400,53,14,0],[59,0,1,9,6,4.5,11200,22300,47,24,0]]},{"n":"不惹小u大哥生气#83576","m":[[17,1,10,8,13,13,15200,24400,61,25,0],[21,0,15,9,24,10.9,18400,50100,64,21,2],[25,1,14,1,10,15.3,13700,23300,67,24,1]]},{"n":"不吃蛋糕小笨蛋#75538","m":[[17,0,9,9,12,10.9,13600,23100,62,20,0],[21,1,13,14,18,9.6,19600,37000,56,15,0],[25,0,6,6,3,10.9,13200,17300,69,28,2],[36,0,2,5,3,9.2,8600,13000,42,26,2],[38,1,9,8,17,11.3,16600,33300,53,20,0],[41,1,7,2,12,8.9,11900,11400,46,10,0],[43,0,11,4,9,13.2,12800,20500,61,23,2],[44,1,10,3,8,12.6,16800,17400,50,16,0],[46,1,4,2,8,8.5,9700,10400,40,14,0],[47,1,5,1,6,11.2,11300,17900,34,22,0],[49,1,19,0,1,13.8,15700,41700,56,41,1],[52,0,6,8,3,9.3,11500,18000,50,22,2],[54,1,7,3,10,13.6,14900,27900,49,22,1],[58,0,14,9,10,10.1,18100,42800,56,30,0],[61,1,11,5,14,13.8,18200,35300,61,26,1]]},{"n":"viper3#56350","m":[[17,0,11,7,13,11.9,16000,31300,71,27,2],[21,0,11,15,21,7.8,17900,55300,52,23,0],[25,1,10,2,13,14.3,14600,25400,64,26,0]]},{"n":"锐锐不雯#53416","m":[[18,1,8,4,3,6.7,7900,11000,41,13,0],[22,0,8,10,5,5.8,12700,30800,48,26,0],[26,0,3,13,5,4.7,10100,16500,35,17,0]]},{"n":"小小怪下士#71024","m":[[18,1,7,3,3,9.1,10200,14100,37,17,0]]},{"n":"奇迹行者就是要刷#84208","m":[[18,0,2,8,0,3.5,6300,7300,18,14,0],[22,0,2,13,8,3.5,12400,18400,37,16,0]]},{"n":"小刘可有可无#14489","m":[[18,0,3,5,1,8.5,8500,12200,36,23,2],[22,1,23,8,10,11.3,22600,55400,62,41,1],[26,0,4,6,6,11.1,16300,19400,43,20,2],[30,0,3,6,2,7.6,10400,20900,36,26,0],[32,1,16,2,6,14.3,14500,21000,65,31,1],[34,1,12,6,10,12.6,16800,41200,63,39,1],[37,1,14,11,7,11.7,21600,45400,46,24,0],[39,0,2,7,3,8.5,6200,13000,56,35,0],[41,1,14,4,8,13.3,17500,41600,54,38,1],[43,0,11,6,4,11.2,13400,21600,45,24,0],[48,0,9,9,7,10,16700,36600,67,37,2],[50,1,13,3,5,13.7,16600,35100,58,40,1],[53,1,28,5,8,12.2,19000,47300,67,37,1],[56,1,4,0,3,13,8500,10100,29,23,1],[57,1,15,8,17,13.1,23700,65600,51,35,0],[60,0,3,5,3,8.2,9100,12100,46,27,2]]},{"n":"黄黄黄瑞奇#27438","m":[[18,0,0,3,1,6.8,5200,7600,9,14,0],[30,1,1,6,4,5.5,10000,16200,15,15,0]]},{"n":"花千树#10000","m":[[18,0,5,7,1,7.2,7500,18000,55,33,0],[22,1,14,5,7,6.9,14500,34100,40,25,0],[26,0,5,11,3,7.2,12600,16900,35,18,0]]},{"n":"东方月初#29645","m":[[19,1,3,4,12,9.1,13100,15000,48,13,0],[23,1,5,2,7,9.2,11700,13300,39,17,0]]},{"n":"良人与苦瓜大王#99293","m":[[19,1,13,3,5,12,14800,34800,58,30,0],[23,1,5,6,17,5.7,9500,19400,71,25,0],[36,1,10,4,7,11.5,12100,20500,53,24,0],[38,1,8,8,16,9,15300,26100,49,16,0]]},{"n":"樱花雨#99357","m":[[19,0,9,2,8,13.6,14900,23700,71,30,2],[23,0,2,5,1,3,9400,6000,20,11,0]]},{"n":"小薇来信#23949","m":[[22,1,8,6,15,7,13700,20600,43,15,0],[26,1,13,5,9,12.9,16400,29700,51,22,0],[32,1,3,3,11,7.1,8600,8700,41,13,0],[34,1,7,5,7,7.4,10900,21200,40,20,0],[37,0,16,12,9,10.9,16200,32500,57,22,0],[39,1,4,3,10,8.6,6200,7800,54,19,0],[41,0,5,10,6,5.2,11700,28300,61,27,0],[43,1,2,9,8,5.4,9600,9300,26,10,0],[50,1,2,1,16,7.1,8400,5700,58,6,0],[53,0,6,16,8,3.6,8800,18700,58,22,0],[56,0,0,4,3,5.9,3900,3900,50,14,0],[57,1,6,11,16,6,13800,16000,35,9,0],[60,0,2,7,3,4.6,5400,4900,38,11,0]]},{"n":"我等打野你在等啥#82687","m":[[26,1,6,4,3,7.5,11600,15500,21,11,0],[36,1,6,0,4,11,10600,16500,31,20,0],[38,1,14,2,14,14.8,16000,40500,57,24,1],[43,1,9,3,3,12.2,12900,26600,32,28,0]]},{"n":"人偶泪#66226","m":[[26,0,4,7,7,7.8,10900,15900,48,17,0]]},{"n":"一枪一个队友#74987","m":[[27,0,7,9,5,4.5,14900,22500,35,22,0],[28,0,10,9,8,7.9,12600,24400,42,22,0],[30,0,3,5,2,7.1,9500,13700,36,17,0],[32,0,2,3,2,5.9,6600,13100,31,26,0],[34,1,1,6,7,3,8700,15500,23,15,0],[37,0,6,15,8,5.3,14300,24400,32,17,0],[39,0,0,1,0,9.5,4700,8400,0,23,0],[41,0,4,9,5,5.1,10800,14600,50,14,0],[43,0,5,10,6,5.1,8800,15600,33,17,0]]},{"n":"思新u#17723","m":[[28,1,8,13,7,10.3,16700,36600,45,31,0]]},{"n":"IvenivenIven#83132","m":[[29,1,6,9,9,5.6,14600,33900,41,22,0],[31,1,2,6,15,6.8,13800,22200,40,14,0],[33,0,2,4,0,5.4,5800,8200,33,27,2],[34,0,1,6,8,6.2,9300,12600,38,15,0]]},{"n":"蓝风铃#94187","m":[[30,1,8,3,7,14.2,15700,29900,44,28,1],[32,1,4,4,5,5.4,9000,14100,26,21,0],[34,1,11,6,9,8.7,13300,19700,57,19,0],[37,1,7,9,8,9.1,17900,37500,33,20,0],[39,1,7,3,4,9,7300,10400,42,25,0],[41,1,1,2,8,9.5,11700,22600,22,21,0]]},{"n":"菊花散一桌#23515","m":[[36,1,7,3,12,11.8,12700,25200,59,30,1],[38,0,3,7,18,9.6,10100,17100,68,14,0]]},{"n":"侥幸从未得到#82697","m":[[36,0,0,6,3,5.6,5300,4400,25,9,0]]},{"n":"庭中三千梨花树#38028","m":[[37,1,3,6,24,7.7,12600,13500,59,7,0],[39,1,0,0,1,8.5,6100,4800,4,12,0],[41,0,4,6,1,6.8,9700,26300,28,25,2]]},{"n":"一条快乐瓜皮#59397","m":[[37,1,8,12,7,7.4,15600,34000,33,18,0],[39,0,5,5,1,12.8,8500,6500,67,18,1],[41,1,0,2,28,7.3,9200,7500,68,7,0],[43,1,9,4,10,13.9,16200,18800,50,20,1],[45,1,12,7,14,12.6,19000,40000,58,24,0]]},{"n":"糖炒苏沫沫#68583","m":[[37,0,17,7,6,11.8,18900,50200,52,34,1],[39,1,8,3,1,9.4,7700,11500,35,28,0],[41,1,19,8,2,8,13900,26900,51,24,0],[43,1,12,7,7,11.3,13300,26800,50,28,0],[45,1,12,5,12,12.5,19200,36500,53,22,0],[48,0,8,11,2,7.5,11700,21100,42,21,0],[50,1,2,5,11,4.5,8700,18300,42,21,0],[53,1,12,6,5,5.6,12200,24700,31,19,0],[56,0,2,3,1,9,5800,4600,50,16,2],[57,0,15,10,21,14,22000,42100,71,24,0],[60,0,3,5,3,7.1,7500,6100,46,14,0]]},{"n":"中华民族实现复兴#38821","m":[[38,1,12,8,21,10.5,17000,46700,67,28,0]]},{"n":"星辰勇士胜利#81537","m":[[40,1,7,6,10,7.6,12900,24000,44,16,0],[42,1,6,0,8,11.9,7400,11100,56,25,0]]},{"n":"唯有相思难熬#80185","m":[[40,0,11,5,7,10.9,17500,33400,56,30,2],[42,0,2,6,1,6,5700,6500,43,20,0]]},{"n":"南京土菜主#37922","m":[[42,1,7,0,1,12.3,9000,7000,32,16,0]]},{"n":"困了鱼#56417","m":[[43,1,6,10,6,5.8,10400,13700,32,14,0],[54,0,4,7,4,7.3,10800,16300,33,19,0],[58,1,8,6,12,9.6,14300,30500,53,21,0],[61,1,11,8,12,12.1,17300,36900,56,27,0]]},{"n":"缘为冰#46082","m":[[43,0,2,10,1,3.7,8100,11200,9,13,0]]},{"n":"ovo#45056","m":[[44,1,10,6,6,12.4,16600,31400,44,29,0],[46,1,5,4,3,8.2,10700,21900,27,28,0],[47,0,3,7,2,7.7,10400,15600,38,23,0],[49,0,4,7,2,5.7,9500,18200,32,27,0],[52,0,6,10,1,7.6,11100,19300,39,24,0]]},{"n":"云何渐渐如钩#76862","m":[[44,0,5,6,3,7.1,13000,9100,38,11,0],[46,0,0,5,3,6,6700,4800,30,10,0],[47,1,8,1,11,13.7,14300,16100,59,20,1],[49,1,1,4,6,6,9900,8600,19,8,0],[52,0,3,8,5,6.6,9100,13800,44,17,0],[54,0,2,9,4,5.1,11000,12800,25,15,0],[58,0,15,9,9,9,17200,27100,56,19,0],[61,0,6,8,7,7.5,13600,17100,45,14,0]]},{"n":"王奕萌#27168","m":[[45,1,6,11,10,8.6,19100,21300,36,13,0],[48,1,16,9,14,10.9,16700,61300,64,38,0]]},{"n":"糖炒黑子萌萌哒#79584","m":[[45,0,1,8,11,6.9,10700,9900,35,7,0],[48,0,1,11,15,4,8000,9100,67,9,0]]},{"n":"几分丧#35130","m":[[45,0,9,8,3,11.2,19600,36700,35,26,0],[48,1,5,2,7,10.6,13200,17200,26,11,0],[50,0,3,8,5,3.7,8300,13800,44,26,0],[53,0,8,8,4,6.7,12700,20700,50,25,2],[56,0,0,5,2,5.8,4500,8100,33,28,0],[57,0,13,8,11,11.6,21500,44800,47,25,0],[60,1,12,3,6,12.8,12000,22100,56,32,1]]},{"n":"摆烂就学刚子哥#34323","m":[[48,1,3,3,32,10.1,11400,18000,74,11,0]]},{"n":"你让我感到开心#88572","m":[[50,0,7,7,5,7,11100,15800,67,30,2],[53,0,3,10,6,3.8,9000,13800,38,16,0],[56,0,1,6,1,4.1,4200,4800,33,17,0],[57,0,5,25,9,4.8,12900,23000,27,13,0],[60,0,1,11,0,3,3800,8900,8,20,0]]},{"n":"可爱小酒#73580","m":[[51,1,3,8,18,6,10300,13500,52,13,0],[55,0,2,14,14,3.2,9600,11000,55,9,0],[59,0,3,12,5,4.4,9100,11700,53,12,0]]},{"n":"uuu#0520","m":[[51,1,6,7,10,8.5,14100,17800,40,17,0],[55,1,16,6,11,13.4,23000,58400,60,33,1],[59,0,5,8,2,7.3,13200,28500,47,30,2]]},{"n":"她是希冀#78666","m":[[51,1,4,6,15,8.9,13700,13100,48,13,0],[55,0,10,6,6,8.9,14700,19000,55,15,2],[59,1,7,3,7,7.9,12900,10400,31,7,0]]},{"n":"陆雪琪#45231","m":[[51,0,0,8,8,4.1,7700,8500,27,9,0]]},{"n":"甜心奶糖酱丶#97558","m":[[54,1,11,8,2,10.6,16400,33100,37,26,0],[58,1,14,9,3,8,16500,33700,45,23,0],[61,1,8,10,8,7.9,13400,26000,39,19,0]]},{"n":"漫天星#11691","m":[[55,1,7,7,15,6.3,13600,26500,49,15,0],[59,0,4,10,6,5.9,9400,20300,67,22,0]]},{"n":"我狸正在摇香菇#50676","m":[[60,1,6,5,2,3.9,6700,10700,25,15,0]]}]}, META={"matches": 62, "range": "11-20 ~ 11-23", "region": "艾欧尼亚"};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const short=n=>n.split("#")[0], tagOf=n=>"#"+(n.split("#")[1]||"");
+const fmt=(v,d=0)=>Number(v).toFixed(d);
+const M=DATA.matches;
+
+// hue from name -> avatar gradient
+function hue(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return h}
+function avStyle(p){const h=hue(p.name);return `--h1:hsl(${h} 90% 80%);--h2:hsl(${(h+40)%360} 85% 68%);--c:var(--${p.tier})`}
+
+// aggregate
+const P=DATA.players.map(o=>{
+  const m=o.m,n=m.length;let w=0,k=0,d=0,a=0,sc=0,g=0,dm=0,mins=0,kp=0,sh=0,mvp=0,svp=0,best=0;
+  for(const x of m){const mm=M[x[0]][2]||0;w+=x[1];k+=x[2];d+=x[3];a+=x[4];sc+=x[5];g+=x[6];dm+=x[7];mins+=mm;kp+=x[8];sh+=x[9];if(x[10]==1)mvp++;if(x[10]==2)svp++;best=Math.max(best,x[5])}
+  return {name:o.n,m,n,w,l:n-w,wr:w/n*100,k:k/n,d:d/n,a:a/n,kda:(k+a)/Math.max(d,1),score:sc/n,dpm:mins?dm/mins:0,gpm:mins?g/mins:0,kp:kp/n,share:sh/n,mvp,svp,best,dmg:dm/n};
+});
+const rbm=M.map(()=>[]);P.forEach(p=>{p.hist=[];p.ex=[];p.dmap={};p.m.forEach(x=>rbm[x[0]].push({p,x}))});
+const ELO={};
+M.map((m,i)=>i).sort((a,b)=>M[a][0].localeCompare(M[b][0])).forEach(mi=>{
+  const rs=rbm[mi],W=rs.filter(r=>r.x[1]),L=rs.filter(r=>!r.x[1]);
+  const sc=rs.map(r=>r.x[5]),u=sc.reduce((a,b)=>a+b)/sc.length,s=Math.sqrt(sc.reduce((a,b)=>a+(b-u)**2,0)/sc.length)||1;
+  rs.forEach(r=>{r.rel=r.x[5]-u;r.z=Math.max(-1.5,Math.min(1.5,r.rel/s));r.p.ex.push(r.rel)});
+  if(!W.length||!L.length)return;
+  const avg=a=>a.reduce((q,r)=>q+(ELO[r.p.name]??1500),0)/a.length;
+  const base=40*(1-1/(1+10**((avg(L)-avg(W))/400)));
+  rs.forEach(r=>{const d=r.x[1]?base*(1+.25*r.z):-base*(1-.25*r.z);ELO[r.p.name]=(ELO[r.p.name]??1500)+d;r.p.dmap[mi]=d;r.p.hist.push({mi,r:ELO[r.p.name],d,w:r.x[1]})});
+});
+const TIERS=[["S",1620],["A",1560],["B",1500],["C",1440],["D",-1e9]];
+P.forEach(p=>{p.elo=ELO[p.name]??1500;p.power=p.elo;p.err=200/Math.sqrt(p.n);p.exc=p.ex.reduce((a,b)=>a+b,0)/p.ex.length;
+  p.tier=TIERS.find(([,v])=>p.elo>=v)[0];p.bar=Math.max(4,Math.min(100,(p.elo-1300)/420*100))});
+const ranked=[...P].sort((a,b)=>b.power-a.power);ranked.forEach((p,i)=>p.rank=i+1);
+const byName=Object.fromEntries(P.map(p=>[p.name,p]));
+// percentiles for radar (players with >=3 games)
+const pool=P.filter(p=>p.n>=3);
+const pct=(p,f)=>{const v=pool.map(x=>x[f]);return v.filter(x=>x<=p[f]).length/v.length*100};
+
+// header
+const totalK=P.reduce((s,p)=>s+p.k*p.n,0),avgMin=M.reduce((s,m)=>s+(m[2]||0),0)/M.length;
+$("#navtag").innerHTML=`<b>●</b> ${META.region} · ${META.range}`;
+$("#ft").textContent=`${META.region}，${META.range}，共 ${META.matches} 场`;
+$("#kpis").innerHTML=[["对局场次",M.length,"场"],["参战召唤师",P.length,"人"],["总击杀",Math.round(totalK),""],["平均时长",fmt(avgMin,1),"分钟"]]
+  .map(([l,v,u])=>`<div class="kpi"><div class="l">${l}</div><div class="v num">${v}<small>${u}</small></div></div>`).join("");
+
+// podium
+const top3=ranked.filter(p=>p.n>=5).slice(0,3);
+$("#topd").textContent="至少 5 场 · 按等级分";
+const order=[1,0,2];
+$("#podium").innerHTML=order.map(i=>{const p=top3[i];if(!p)return"<div></div>";
+  return `<div class="pc p${i+1}" data-n="${esc(p.name)}"><div class="medal">${["第一名","第二名","第三名"][i]}</div>
+  <div class="av" style="${avStyle(p)}">${esc([...short(p.name)][0])}<span class="tb">${p.tier}</span></div>
+  <div class="nm">${esc(short(p.name))}</div><div class="tag">${esc(tagOf(p.name))}</div>
+  <div class="pw tierL" style="--c:var(--${p.tier})">${p.tier}</div><div class="pe num">等级分 ${fmt(p.elo)}<small> ±${fmt(p.err)}</small></div>
+  <div class="row3"><div><b class="num">${fmt(p.wr)}%</b><span>胜率</span></div><div><b class="num">${fmt(p.kda,2)}</b><span>KDA</span></div><div><b class="num">${p.n}</b><span>场次</span></div></div></div>`}).join("");
+
+// awards
+const el=P.filter(p=>p.n>=5);
+const pick=(f,asc)=>[...el].sort((a,b)=>asc?a[f]-b[f]:b[f]-a[f])[0];
+const AW=[["👑","MVP 收割机","mvp",p=>`<b>${p.mvp}</b> 次全场最佳`],["⚔️","伤害之王","dpm",p=>`分均伤害 <b>${fmt(p.dpm)}</b>`],
+  ["🎯","KDA 大师","kda",p=>`KDA <b>${fmt(p.kda,2)}</b>`],["🛡️","不死之身","d",p=>`场均仅死 <b>${fmt(p.d,1)}</b> 次`,1],
+  ["🤝","团战核心","kp",p=>`参团率 <b>${fmt(p.kp)}%</b>`],["💰","经济巨鳄","gpm",p=>`分均经济 <b>${fmt(p.gpm)}</b>`],
+  ["🔥","人头狂魔","k",p=>`场均 <b>${fmt(p.k,1)}</b> 杀`],["✨","奶妈天使","a",p=>`场均 <b>${fmt(p.a,1)}</b> 助攻`],["💎","虽败犹荣","svp",p=>`<b>${p.svp}</b> 次败方最佳`]];
+$("#aw").innerHTML=AW.map(([ic,t,f,v,asc])=>{const p=pick(f,asc);return `<div class="aw" data-n="${esc(p.name)}"><div class="ic">${ic}</div><div><div class="t">${t}</div><div class="n">${esc(short(p.name))}</div><div class="v">${v(p)}</div></div></div>`}).join("");
+
+// table
+const COLS=[["rank","#"],["name","召唤师"],["tier","评级"],["power","等级分"],["wr","胜率"],["kda","KDA"],["exc","超常发挥"],["dpm","分均伤害"],["rec","近 10 场"]];
+let sk="power",desc=true,minN=5;
+const maxDpm=Math.max(...P.map(p=>p.dpm));
+function ring(v){const r=14,c=2*Math.PI*r,o=c*(1-v/100);return `<svg class="ring" viewBox="0 0 34 34"><circle cx="17" cy="17" r="${r}" fill="none" stroke="#ffd0dd" stroke-width="5"/><circle cx="17" cy="17" r="${r}" fill="none" stroke="#4fd1b0" stroke-width="5" stroke-dasharray="${c}" stroke-dashoffset="${o}" transform="rotate(-90 17 17)" stroke-linecap="round"/></svg>`}
+function renderTable(){
+  const q=$("#q").value.trim().toLowerCase();
+  $("#th").innerHTML=COLS.map(([k,l])=>`<div data-k="${k}" class="${k===sk?"on":""}">${l}${k===sk?(desc?" ↓":" ↑"):""}</div>`).join("");
+  let L=P.filter(p=>p.n>=minN&&p.name.toLowerCase().includes(q));
+  P.filter(p=>p.n>=minN).sort((a,b)=>b.power-a.power).forEach((p,i)=>p.rank=i+1);
+  const key=sk==="tier"?"power":sk==="rec"?"n":sk;
+  L.sort((a,b)=>{const x=a[key],y=b[key];return (typeof x==="string"?x.localeCompare(y,"zh"):x-y)*(desc?-1:1)});
+  $("#cnt").textContent=`共 ${L.length} 位召唤师`;
+  $("#tb").innerHTML=L.length?L.map(p=>{
+    const last=[...p.m].sort((a,b)=>b[0]-a[0]).slice(0,10);
+    const rec=last.map(x=>`<i class="${x[1]?"w":""}" title="${M[x[0]][0]} ${x[1]?"胜":"败"}"></i>`).join("")+"<i class='e'></i>".repeat(10-last.length);
+    const kc=p.kda>=3.5?"k-hi":p.kda>=2.5?"k-md":"k-lo";
+    return `<div class="tr ${p.rank<=3?"top"+p.rank:""}" data-n="${esc(p.name)}">
+      <div class="rk num">${p.rank}</div>
+      <div class="pl"><div class="mini" style="${avStyle(p)}">${esc([...short(p.name)][0])}</div><div style="min-width:0"><div class="nm">${esc(short(p.name))}</div><div class="tg">${esc(tagOf(p.name))}</div></div></div>
+      <div><div class="tier" style="--c:var(--${p.tier})">${p.tier}</div></div>
+      <div class="pwr"><b class="num">${fmt(p.elo)}<small>±${fmt(p.err)}</small></b><div class="bar"><i style="width:${p.bar}%"></i></div></div>
+      <div class="wr">${ring(p.wr)}<div><b class="num">${fmt(p.wr)}%</b><span>${p.w}胜 ${p.l}负</span></div></div>
+      <div class="kda"><b class="num ${kc}">${fmt(p.kda,2)}</b><span class="num">${fmt(p.k,1)} / ${fmt(p.d,1)} / ${fmt(p.a,1)}</span></div>
+      <div class="sc num ${p.exc>=0?"pos":"neg"}">${p.exc>=0?"+":""}${fmt(p.exc,1)}</div>
+      <div class="dmg"><b class="num">${fmt(p.dpm)}</b><div class="bar"><i style="width:${p.dpm/maxDpm*100}%"></i></div></div>
+      <div class="rec">${rec}</div></div>`}).join(""):`<div class="empty">没有符合条件的召唤师</div>`;
+}
+$("#th").onclick=e=>{const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;if(k===sk)desc=!desc;else{sk=k;desc=!["name","rank"].includes(k)}renderTable()};
+$("#q").oninput=renderTable;
+$("#seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;minN=+b.dataset.v;[...$("#seg").children].forEach(x=>x.classList.toggle("on",x===b));renderTable()};
+
+// duos
+(function(){
+  const pair={};
+  M.forEach((m,mi)=>{for(const side of[1,0]){const t=rbm[mi].filter(r=>r.x[1]===side).map(r=>r.p.name).sort();
+    for(let i=0;i<t.length;i++)for(let j=i+1;j<t.length;j++){const k=t[i]+"|"+t[j];(pair[k]??={g:0,w:0});pair[k].g++;pair[k].w+=side}}});
+  const wil=(w,n)=>{const z=1.28,p=w/n;return(p+z*z/(2*n)-z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n)))/(1+z*z/n)};
+  const L=Object.entries(pair).filter(([,v])=>v.g>=4).map(([k,v])=>({a:k.split("|")[0],b:k.split("|")[1],...v,s:wil(v.w,v.g)})).sort((x,y)=>y.s-x.s).slice(0,6);
+  $("#duo").innerHTML=L.map((d,i)=>{const A=byName[d.a],B=byName[d.b];return `<div class="du"><div class="du-i">${i+1}</div>
+    <div class="du-av"><div class="mini" style="${avStyle(A)}" data-n="${esc(d.a)}">${esc([...short(d.a)][0])}</div><div class="mini" style="${avStyle(B)}" data-n="${esc(d.b)}">${esc([...short(d.b)][0])}</div></div>
+    <div class="du-n"><b data-n="${esc(d.a)}">${esc(short(d.a))}</b><span>&amp;</span><b data-n="${esc(d.b)}">${esc(short(d.b))}</b></div>
+    <div class="du-r"><b class="num">${fmt(d.w/d.g*100)}%</b><span class="num">${d.w}胜${d.g-d.w}负</span></div></div>`}).join("");
+})();
+
+// match list
+const rowsByMatch=M.map(()=>[]);
+P.forEach(p=>p.m.forEach(x=>rowsByMatch[x[0]].push({p,x})));
+let shown=8;
+const order2=M.map((m,i)=>i).sort((a,b)=>M[b][0].localeCompare(M[a][0]));
+function teamHtml(names,mi){
+  const rs=names.map(n=>rowsByMatch[mi].find(r=>r.p.name===n)).filter(Boolean);
+  const win=rs[0]?.x[1];
+  const tk=rs.reduce((s,r)=>s+r.x[2],0);
+  return `<div class="team ${win?"w":""}"><div class="hd">${win?"赢啦":"输了呜"} · ${tk} 杀</div>${rs.map(({p,x})=>`<div class="p" data-n="${esc(p.name)}"><span>${esc(short(p.name))}${x[10]==1?'<span class="mvp">MVP</span>':x[10]==2?'<span class="mvp svp">SVP</span>':""}</span><span class="num">${x[2]}/${x[3]}/${x[4]}</span><span class="num">${fmt(x[5],1)}</span></div>`).join("")}</div>`;
+}
+function renderMatches(){
+  $("#ml").innerHTML=order2.slice(0,shown).map(i=>{const m=M[i];
+    return `<div class="mt"><div class="info"><b>${esc(DATA.modes[m[1]])}</b><div class="num">${m[0]}</div><div>${m[2]?fmt(m[2],1)+" 分钟":""}</div></div>${teamHtml(m[3],i)}${teamHtml(m[4],i)}</div>`}).join("");
+  $("#more").style.display=shown>=M.length?"none":"block";
+}
+$("#more").onclick=()=>{shown+=10;renderMatches()};
+
+// radar
+function radar(p){
+  const ax=[["胜率","wr"],["KDA","kda"],["评分","score"],["伤害","dpm"],["经济","gpm"],["参团","kp"]];
+  const R=78,cx=110,cy=105,N=ax.length;
+  const pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/N;return [cx+r*Math.cos(a),cy+r*Math.sin(a)]};
+  let g="";
+  for(const lv of [.25,.5,.75,1])g+=`<polygon points="${ax.map((_,i)=>pt(i,R*lv).join(",")).join(" ")}" fill="none" stroke="#f6dce9" stroke-dasharray="3 3"/>`;
+  ax.forEach((_,i)=>{const [x,y]=pt(i,R);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#f6dce9"/>`});
+  const vals=ax.map(([,f])=>Math.max(6,pct(p,f)));
+  const poly=vals.map((v,i)=>pt(i,R*v/100).join(",")).join(" ");
+  g+=`<polygon points="${poly}" fill="#ff7eb640" stroke="#ff7eb6" stroke-width="2.5" stroke-linejoin="round"/>`;
+  vals.forEach((v,i)=>{const [x,y]=pt(i,R*v/100);g+=`<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="#ff7eb6" stroke-width="2"/>`});
+  ax.forEach(([l],i)=>{const [x,y]=pt(i,R+18);g+=`<text x="${x}" y="${y+4}" fill="#9a86a6" font-size="12" font-weight="700" text-anchor="middle">${l}</text>`});
+  return `<svg viewBox="0 0 220 210" width="220">${g}</svg>`;
+}
+function eloChart(p){
+  const h=p.hist;if(!h.length)return"";const vs=[1500,...h.map(x=>x.r)],lo=Math.min(...vs,1500)-20,hi=Math.max(...vs,1500)+20,W=480,H=150;
+  const X=i=>18+i/(vs.length-1||1)*(W-30),Y=v=>H-16-(v-lo)/(hi-lo)*(H-30);
+  let g="";for(const[t,v]of TIERS.slice(0,4))if(v>lo&&v<hi)g+=`<line x1="18" x2="${W-12}" y1="${Y(v)}" y2="${Y(v)}" stroke="#f6dce9" stroke-dasharray="4 4"/><text x="${W-10}" y="${Y(v)+4}" font-size="11" font-weight="900" fill="var(--${t})">${t}</text>`;
+  const pts=vs.map((v,i)=>X(i)+","+Y(v)).join(" ");
+  g+=`<polygon points="${X(0)},${H-16} ${pts} ${X(vs.length-1)},${H-16}" fill="#ff7eb61f"/><polyline points="${pts}" fill="none" stroke="#ff7eb6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  h.forEach((x,i)=>g+=`<circle cx="${X(i+1)}" cy="${Y(x.r)}" r="4.5" fill="${x.w?"#4fd1b0":"#ff8fab"}" stroke="#fff" stroke-width="2"><title>${M[x.mi][0]} ${x.w?"胜":"负"} ${x.d>=0?"+":""}${fmt(x.d)}</title></circle>`);
+  return `<div class="elo-c"><svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg></div>`}
+function openP(name){
+  const p=byName[name];if(!p)return;
+  const games=[...p.m].sort((a,b)=>b[0]-a[0]);
+  const topPct=x=>`<em>前${fmt(100-pct(p,x)+(100/pool.length),0)}%</em>`;
+  $("#drc").innerHTML=`<div class="dh"><div class="av" style="${avStyle(p)}">${esc([...short(p.name)][0])}<span class="tb">${p.tier}</span></div>
+    <div><div class="nm">${esc(short(p.name))}</div><div class="tg">${esc(p.name)}</div>
+    <div class="chips"><span class="chip g">第 ${p.rank} 名</span><span class="chip g">${p.tier} 级 · ${fmt(p.elo)}</span>${p.mvp?`<span class="chip">MVP ×${p.mvp}</span>`:""}${p.svp?`<span class="chip">SVP ×${p.svp}</span>`:""}${p.n<3?`<span class="chip">样本较少</span>`:""}</div></div></div>
+    <div class="dbody"><div class="radar-wrap">${radar(p)}<div class="sg">
+      <div><span>胜率</span><b class="num">${fmt(p.wr)}%</b></div><div><span>KDA</span><b class="num">${fmt(p.kda,2)}</b></div>
+      <div><span>场均评分</span><b class="num">${fmt(p.score,2)}</b></div><div><span>分均伤害</span><b class="num">${fmt(p.dpm)}</b></div>
+      <div><span>参团率</span><b class="num">${fmt(p.kp)}%</b></div><div><span>伤害占比</span><b class="num">${fmt(p.share)}%</b></div>
+    </div></div>
+    <h3>等级分走势</h3>${eloChart(p)}
+    <h3>对局明细 · ${p.n} 场 ${p.w}胜${p.l}负</h3>
+    ${games.map(x=>{const m=M[x[0]];const kda=((x[2]+x[4])/Math.max(x[3],1)).toFixed(2);
+      return `<div class="gm ${x[1]?"w":""}"><div class="s"></div><div class="r"><b>${x[1]?"胜利":"失败"}</b><div>${esc(DATA.modes[m[1]])}</div><div class="num">${m[0]}</div></div>
+      <div class="k"><b class="num">${x[2]}<span>/</span><span class="dd">${x[3]}</span><span>/</span>${x[4]}</b>${x[10]==1?'<span class="mvp">MVP</span>':x[10]==2?'<span class="mvp svp">SVP</span>':""}<div>${kda} KDA · 参团 ${x[8]}%</div></div>
+      <div class="o"><b class="num">${(x[7]/1000).toFixed(1)}k</b>伤害 ${x[9]}%</div><div class="scb num ${(p.dmap[x[0]]??0)>=0?"pos":"neg"}">${(p.dmap[x[0]]??0)>=0?"+":"−"}${fmt(Math.abs(p.dmap[x[0]]??0))}</div></div>`}).join("")}
+    </div>`;
+  $("#dr").scrollTop=0;$("#dr").classList.add("on");$("#ov").classList.add("on");
+}
+const closeP=()=>{$("#dr").classList.remove("on");$("#ov").classList.remove("on")};
+$("#ov").onclick=closeP;$("#x").onclick=closeP;addEventListener("keydown",e=>e.key==="Escape"&&closeP());
+document.addEventListener("click",e=>{const t=e.target.closest("[data-n]");if(t&&!t.closest(".dr"))openP(t.dataset.n)});
+
+renderTable();renderMatches();
+</script>
+</body>
+</html>
